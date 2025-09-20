@@ -31,3 +31,6 @@ C:\Users\janet\dev\whisker-list\WhiskerList.Api\obj\Debug\net9.0\refint\WhiskerL
 C:\Users\janet\dev\whisker-list\WhiskerList.Api\obj\Debug\net9.0\WhiskerList.Api.pdb
 C:\Users\janet\dev\whisker-list\WhiskerList.Api\obj\Debug\net9.0\WhiskerList.Api.genruntimeconfig.cache
 C:\Users\janet\dev\whisker-list\WhiskerList.Api\obj\Debug\net9.0\ref\WhiskerList.Api.dll
+C:\Users\janet\dev\whisker-list\WhiskerList.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\janet\dev\whisker-list\WhiskerList.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\janet\dev\whisker-list\WhiskerList.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll

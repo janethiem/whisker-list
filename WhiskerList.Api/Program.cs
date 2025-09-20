@@ -1,15 +1,18 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();  // 1. include endpoint metadata
+builder.Services.AddSwaggerGen(o => // 2. generate OpenAPI/Swagger
+{
+    o.SwaggerDoc("v1", new() { Title = "WhiskerList API", Version = "v1" });
+});            // 2. generate OpenAPI/Swagger
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();                        // 3. serve JSON spec at /swagger/v1/swagger.json
+    app.UseSwaggerUI();                      // 4. serve UI at /swagger
 }
 
 app.UseHttpsRedirection();

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WhiskerList.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2bc98c884623e3d659b00ccadca7c2bf37defae2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+188dd16275ee15100c64c30d94236cc0c5867b96")]
 [assembly: System.Reflection.AssemblyProductAttribute("WhiskerList.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WhiskerList.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
