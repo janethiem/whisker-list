@@ -1,0 +1,61 @@
+@baseUrl = http://localhost:5280/todo-tasks
+
+### Get all todo tasks
+GET {{baseUrl}}
+
+### Get all completed todo tasks  
+GET {{baseUrl}}?isCompleted=true
+
+### Get todo tasks by priority (High priority = 3)
+GET {{baseUrl}}?priority=3
+
+### Search todo tasks
+GET {{baseUrl}}?search=documentation
+
+### Get sorted todo tasks (by due date, newest first)
+GET {{baseUrl}}?sortBy=dueDate&sortDescending=true
+
+### Get specific todo task by ID
+GET {{baseUrl}}/1
+
+### Create a new todo task
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+    "title": "Complete project documentation",
+    "description": "Write comprehensive documentation for the WhiskerList API",
+    "dueDate": "2025-09-25T10:00:00Z",
+    "priority": 2
+}
+
+### Create another todo task (for testing)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+    "title": "Buy groceries", 
+    "description": "Milk, eggs, bread, and coffee",
+    "dueDate": "2025-09-22T18:00:00Z",
+    "priority": 1
+}
+
+### Update a todo task (partial update)
+PUT {{baseUrl}}/1
+Content-Type: application/json
+
+{
+    "title": "Updated task title",
+    "description": "Updated description with more details",
+    "isCompleted": false,
+    "priority": 3
+}
+
+### Toggle completion status
+PATCH {{baseUrl}}/1/complete
+
+### Delete a todo task  
+DELETE {{baseUrl}}/2
+
+### Get todo task statistics
+GET {{baseUrl}}/stats

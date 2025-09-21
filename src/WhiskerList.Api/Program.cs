@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TodoDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Add controllers
+builder.Services.AddControllers();
+
 // Add Swagger UI
 builder.Services.AddEndpointsApiExplorer(); 
 builder.Services.AddSwaggerGen(o => 
@@ -24,6 +27,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Map controllers
+app.MapControllers();
 
 app.Run();
 
