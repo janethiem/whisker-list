@@ -10,6 +10,17 @@ builder.Services.AddDbContext<TodoDbContext>(options =>
 // Add controllers
 builder.Services.AddControllers();
 
+// Add CORS for frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000", "http://localhost:5173") // React common ports
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // Add Swagger UI
 builder.Services.AddEndpointsApiExplorer(); 
 builder.Services.AddSwaggerGen(o => 
@@ -29,6 +40,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Map controllers
+app.UseCors("AllowFrontend");
 app.MapControllers();
 
 app.Run();
