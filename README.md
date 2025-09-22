@@ -10,7 +10,7 @@ A full-stack todo list application with a **React TypeScript** frontend and **AS
 - [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 - [Node.js 18+](https://nodejs.org/) and npm
 
-### Option 1: Run Both Frontend and Backend (Recommended)
+### Setup Instructions
 
 1. **Clone the repository:**
    ```bash
@@ -33,21 +33,9 @@ A full-stack todo list application with a **React TypeScript** frontend and **AS
    # Frontend runs at http://localhost:5173
    ```
 
-4. **Access the full application:**
+4. **Access the application:**
    - **Frontend UI**: http://localhost:5173
-   - **API Swagger**: http://localhost:5280/swagger
-
-### Option 2: Backend API Only
-
-```bash
-cd backend/WhiskerList.Api
-dotnet run
-# Test at http://localhost:5280/swagger
-```
-
-### Option 3: Frontend Only (uses built distribution)
-
-The `frontend/dist` folder contains a pre-built version that can be served statically.
+   - **API Documentation**: http://localhost:5280/swagger
 
 ---
 
@@ -55,48 +43,29 @@ The `frontend/dist` folder contains a pre-built version that can be served stati
 
 ### Core Functionality
 ✅ **Full CRUD Operations** - Create, read, update, delete tasks  
-✅ **Task Management** - Mark complete/incomplete, set priorities  
+✅ **Task Management** - Mark complete/incomplete, set priorities (1-3)  
 ✅ **Due Dates** - Optional deadline tracking  
 ✅ **Real-time Updates** - Optimistic UI updates with React Query  
 
 ### Advanced Features
-✅ **Search & Filtering** - By status, priority, and text search  
-✅ **Flexible Sorting** - By creation date, title, due date, priority  
-✅ **Statistics API** - Task completion metrics and analytics  
-✅ **Responsive Design** - Mobile-friendly interface  
+✅ **Search & Filtering** - By completion status, priority, and text search  
+✅ **Flexible Sorting** - By creation date, title, due date, priority, updated date  
+✅ **Statistics API** - Task completion metrics endpoint  
+✅ **Custom Icons** - Cat-themed icon set for UI elements  
 
 ### Developer Experience
 ✅ **Comprehensive Testing** - Unit tests for both frontend and backend  
 ✅ **Type Safety** - Full TypeScript implementation  
 ✅ **API Documentation** - Interactive Swagger/OpenAPI docs  
-✅ **Clean Architecture** - Proper separation of concerns  
+✅ **Clean Architecture** - Proper separation with DTOs  
 ✅ **Error Handling** - Graceful error states and user feedback  
-
-### Quality Assurance
-✅ **Input Validation** - Client and server-side validation  
-✅ **Loading States** - Skeleton loaders and loading indicators  
-✅ **Accessibility** - ARIA labels and keyboard navigation  
-✅ **Performance** - Optimized queries and caching strategies  
+✅ **Loading States** - Visual feedback during operations  
 
 ---
 
-## 📋 API Endpoints
+## 📋 API Documentation
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/todo-tasks` | Get all tasks (with filtering & sorting) |
-| `GET` | `/todo-tasks/{id}` | Get a specific task |
-| `POST` | `/todo-tasks` | Create a new task |
-| `PATCH` | `/todo-tasks/{id}` | Update an existing task (partial) |
-| `DELETE` | `/todo-tasks/{id}` | Delete a task |
-| `GET` | `/todo-tasks/stats` | Get task statistics |
-
-### Query Parameters (GET /todo-tasks)
-- `isCompleted` (bool) - Filter by completion status
-- `priority` (int) - Filter by priority (1=Low, 2=Medium, 3=High)
-- `search` (string) - Search in title and description
-- `sortBy` (string) - Sort by: title, createdAt, dueDate, priority, updatedAt
-- `sortDescending` (bool) - Sort direction
+All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5280/swagger` after starting the backend to explore the interactive documentation.
 
 ---
 
@@ -112,15 +81,18 @@ The `frontend/dist` folder contains a pre-built version that can be served stati
 - **React 18** with TypeScript - Type-safe component library
 - **Vite** - Fast build tool and dev server
 - **TanStack Query** - Server state management
-- **Tailwind CSS** - Utility-first styling
+- **Tailwind CSS** - Utility-first CSS framework
 
 ### Key Design Principles
 - **Clean Architecture** - Separation of concerns with DTOs
 - **RESTful API Design** - Intuitive endpoints and HTTP semantics
 - **Type Safety** - Full TypeScript coverage
-- **Responsive Design** - Mobile-first approach
 - **Performance** - Optimistic updates and efficient caching
-- **Accessibility** - WCAG compliant interface
+
+### UI Design
+- **Custom Icon System** - Cat-themed PNG icons with semantic mapping
+- **Inline Styling** - Custom CSS-in-JS for theme consistency
+- **Component Structure** - Organized by feature (todo/) and reusable UI components
 
 ---
 
@@ -134,14 +106,14 @@ The `frontend/dist` folder contains a pre-built version that can be served stati
 
 ### API Design Choices
 - **PATCH for Updates**: Partial updates only modify provided fields
-- **Query Parameters**: Kept simple and intuitive for filtering
+- **Query Parameters**: Kept simple and intuitive for filtering/sorting
 - **Error Handling**: Standardized HTTP status codes with descriptive messages
 - **No Authentication**: Omitted for MVP simplicity - single user assumed
 
 ### Frontend Architecture
-- **Component Structure**: Organized by feature (todo/) and reusable UI components
-- **State Management**: React Query for server state, local state for UI
-- **Styling**: Utility-first with custom cat-themed design system
+- **Component Structure**: Feature-based organization with reusable UI components
+- **State Management**: React Query for server state, local React state for UI
+- **Styling**: Tailwind utility classes with custom inline styles for theming
 - **Form Handling**: Controlled components with client-side validation
 
 ---
@@ -151,14 +123,14 @@ The `frontend/dist` folder contains a pre-built version that can be served stati
 ### Current Architecture Strengths
 - **Stateless API**: Horizontally scalable backend design
 - **Database Migrations**: Schema versioning for safe deployments
-- **Caching Strategy**: React Query provides efficient client-side caching
 - **Component Reusability**: Modular frontend architecture
+- **Query Optimization**: React Query provides client-side caching
 
 ### Known Limitations
-- **SQLite**: Single-file database limits concurrent access
-- **No Pagination**: All tasks loaded at once (fine for MVP scale)
+- **SQLite**: Single-file database limits concurrent access in production
+- **No Pagination**: All tasks loaded at once (acceptable for MVP user loads)
 - **No Authentication**: Single-user application model
-- **Client-side Filtering**: Full dataset transferred for search/filter
+- **Client-side Filtering**: Full dataset transferred for search/filter operations
 
 ---
 
