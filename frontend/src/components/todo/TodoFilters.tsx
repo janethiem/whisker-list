@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Input, Select, Button } from '../ui';
 import { UI_TEXT } from '../../constants/strings';
 import type { TodoQueryParams } from '../../types/todo';
@@ -10,29 +10,43 @@ interface TodoFiltersProps {
 
 const TodoFilters = ({ onFiltersChange, initialFilters = {} }: TodoFiltersProps) => {
   const [filters, setFilters] = useState<TodoQueryParams>(initialFilters);
+  const onFiltersChangeRef = useRef(onFiltersChange);
+  const prevInitialFiltersRef = useRef<TodoQueryParams>(initialFilters);
 
+  // Keep the ref up to date
   useEffect(() => {
-    setFilters(initialFilters);
+    onFiltersChangeRef.current = onFiltersChange;
+  });
+
+  // Only update filters if initialFilters actually changed (avoid object reference issues)
+  useEffect(() => {
+    const prevFilters = prevInitialFiltersRef.current;
+    const hasChanged = JSON.stringify(prevFilters) !== JSON.stringify(initialFilters);
+    
+    if (hasChanged) {
+      setFilters(initialFilters);
+      prevInitialFiltersRef.current = initialFilters;
+    }
   }, [initialFilters]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      onFiltersChange(filters);
+      onFiltersChangeRef.current(filters);
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [filters, onFiltersChange]);
+  }, [filters]); // Removed onFiltersChange from dependencies
 
-  const updateFilter = (key: keyof TodoQueryParams, value: any) => {
+  const updateFilter = useCallback((key: keyof TodoQueryParams, value: any) => {
     setFilters(prev => ({
       ...prev,
       [key]: value === '' ? undefined : value,
     }));
-  };
+  }, []);
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     setFilters({});
-  };
+  }, []);
 
   const hasActiveFilters = Object.values(filters).some(value => 
     value !== undefined && value !== '' && value !== null

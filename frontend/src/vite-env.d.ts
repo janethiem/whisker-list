@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/// <reference types="@testing-library/jest-dom" />
 
 // Declare PNG modules so TypeScript recognizes them
 declare module '*.png' {

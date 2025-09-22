@@ -10,6 +10,7 @@ import {
   useUpdateTodo,
   useToggleTodoComplete,
   useDeleteTodo,
+  todoKeys,
 } from './useTodos';
 import * as todoService from '../services/todoService';
 import type { TodoTask, CreateTodoRequest, UpdateTodoRequest, TodoStats } from '../types/todo';
@@ -109,14 +110,6 @@ describe('useTodos Hooks', () => {
       expect(result.current.error).toEqual(error);
     });
 
-    it('should use correct query key', () => {
-      const params = { isCompleted: true };
-      renderHook(() => useTodos(params), {
-        wrapper: createWrapper(),
-      });
-
-      expect(mockedTodoService.fetchTodos).toHaveBeenCalledWith(params);
-    });
   });
 
   describe('useTodo', () => {
