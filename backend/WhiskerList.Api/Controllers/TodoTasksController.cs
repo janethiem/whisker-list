@@ -129,9 +129,9 @@ namespace WhiskerList.Api.Controllers
         }
 
         /// <summary>
-        /// Update an existing todo task
+        /// Update an existing todo task (partial update)
         /// </summary>
-        [HttpPut("{id}")]
+        [HttpPatch("{id}")]
         public async Task<ActionResult<TodoTaskResponse>> UpdateTodoTask(int id, UpdateTodoTaskRequest request)
         {
             try
@@ -176,39 +176,6 @@ namespace WhiskerList.Api.Controllers
             }
         }
 
-        /// <summary>
-        /// Toggle the completion status of a todo task
-        /// </summary>
-        [HttpPatch("{id}/complete")]
-        public async Task<ActionResult<TodoTaskResponse>> ToggleComplete(int id)
-        {
-            try
-            {
-                var todoTask = await _context.TodoTasks.FindAsync(id);
-
-                if (todoTask == null)
-                {
-                    _logger.LogWarning("Todo task with ID {Id} not found for completion toggle", id);
-                    return NotFound($"Todo task with ID {id} not found");
-                }
-
-                todoTask.IsCompleted = !todoTask.IsCompleted;
-                todoTask.UpdatedAt = DateTime.UtcNow;
-
-                await _context.SaveChangesAsync();
-
-                var response = MapToResponse(todoTask);
-                
-                _logger.LogInformation("Toggled completion status for todo task with ID {Id} to {Status}", 
-                    id, todoTask.IsCompleted);
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error toggling completion for todo task with ID {Id}", id);
-                return StatusCode(500, "An error occurred while updating the todo task");
-            }
-        }
 
         /// <summary>
         /// Delete a todo task
