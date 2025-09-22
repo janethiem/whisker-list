@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import {
   fetchTodos,
   fetchTodo,
@@ -15,14 +15,13 @@ vi.mock('./api', () => ({
   apiClient: {
     get: vi.fn(),
     post: vi.fn(),
-    put: vi.fn(),
     patch: vi.fn(),
     delete: vi.fn(),
   }
 }));
 
 import { apiClient } from './api';
-const mockApiClient = vi.mocked(apiClient);
+const mockApiClient = apiClient as any;
 
 // Mock data
 const mockTodo: TodoTask = {
@@ -134,18 +133,18 @@ describe('TodoService', () => {
     it('should update a todo', async () => {
       const updateRequest: UpdateTodoRequest = { title: 'Updated Title' };
       const updatedTodo = { ...mockTodo, ...updateRequest };
-      mockApiClient.put.mockResolvedValueOnce({ data: updatedTodo });
+      mockApiClient.patch.mockResolvedValueOnce({ data: updatedTodo });
 
       const result = await updateTodo(1, updateRequest);
 
-      expect(mockApiClient.put).toHaveBeenCalledWith('/todo-tasks/1', updateRequest);
+      expect(mockApiClient.patch).toHaveBeenCalledWith('/todo-tasks/1', updateRequest);
       expect(result).toEqual(updatedTodo);
     });
 
     it('should handle partial updates', async () => {
       const updateRequest: UpdateTodoRequest = { isCompleted: true, priority: 3 };
       const updatedTodo = { ...mockTodo, ...updateRequest };
-      mockApiClient.put.mockResolvedValueOnce({ data: updatedTodo });
+      mockApiClient.patch.mockResolvedValueOnce({ data: updatedTodo });
 
       const result = await updateTodo(1, updateRequest);
 
@@ -158,9 +157,9 @@ describe('TodoService', () => {
       const toggledTodo = { ...mockTodo, isCompleted: true };
       mockApiClient.patch.mockResolvedValueOnce({ data: toggledTodo });
 
-      const result = await toggleTodoComplete(1);
+      const result = await toggleTodoComplete(1, false);
 
-      expect(mockApiClient.patch).toHaveBeenCalledWith('/todo-tasks/1/complete');
+      expect(mockApiClient.patch).toHaveBeenCalledWith('/todo-tasks/1', { isCompleted: true });
       expect(result).toEqual(toggledTodo);
     });
   });

@@ -35,19 +35,18 @@ export const createTodo = async (data: CreateTodoRequest): Promise<TodoTask> => 
 };
 
 /**
- * PUT /todo-tasks/{id} - Update a todo
+ * PATCH /todo-tasks/{id} - Update a todo (partial update)
  */
 export const updateTodo = async (id: number, data: UpdateTodoRequest): Promise<TodoTask> => {
-  const response = await apiClient.put<TodoTask>(`/todo-tasks/${id}`, data);
+  const response = await apiClient.patch<TodoTask>(`/todo-tasks/${id}`, data);
   return response.data;
 };
 
 /**
- * PATCH /todo-tasks/{id}/complete - Toggle completion status
+ * Toggle completion status using the main update endpoint
  */
-export const toggleTodoComplete = async (id: number): Promise<TodoTask> => {
-  const response = await apiClient.patch<TodoTask>(`/todo-tasks/${id}/complete`);
-  return response.data;
+export const toggleTodoComplete = async (id: number, currentIsCompleted: boolean): Promise<TodoTask> => {
+  return updateTodo(id, { isCompleted: !currentIsCompleted });
 };
 
 /**

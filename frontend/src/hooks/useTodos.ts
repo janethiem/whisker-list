@@ -103,13 +103,14 @@ export const useUpdateTodo = () => {
 
 /**
  * Hook to toggle todo completion
- * ✏️ This is for PATCH /todo-tasks/{id}/complete
+ * ✏️ This uses the main PATCH /todo-tasks/{id} endpoint
  */
 export const useToggleTodoComplete = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: toggleTodoComplete,
+    mutationFn: ({ id, currentIsCompleted }: { id: number; currentIsCompleted: boolean }) => 
+      toggleTodoComplete(id, currentIsCompleted),
     onSuccess: (updatedTodo) => {
       // Optimistically update the todo in cache
       queryClient.setQueryData(todoKeys.detail(updatedTodo.id), updatedTodo);

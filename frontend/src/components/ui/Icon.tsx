@@ -40,15 +40,29 @@ const iconMap = {
   logo: 'whiskers-cat-face',
 } as const;
 
+const tooltipMap = {
+  add: 'Add',
+  complete: 'Complete',
+  edit: 'Edit',
+  delete: 'Delete',
+  list: 'List',
+  search: 'Search',
+  archive: 'Archive',
+  category: 'Category',
+  calendar: 'Calendar',
+  logo: 'Logo',
+} as const;
+
 type SemanticIconName = keyof typeof iconMap;
 
-interface IconProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'> {
+interface IconProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'title'> {
   name: IconName | SemanticIconName;
   size?: number;
   className?: string;
+  tooltip?: string;
 }
 
-const Icon = ({ name, size = 24, className = '', ...props }: IconProps) => {
+const Icon = ({ name, size = 24, className = '', tooltip, ...props }: IconProps) => {
   const iconKey = (iconMap[name as SemanticIconName] || name) as IconName;
   const iconSrc = iconAssets[iconKey];
 
@@ -57,32 +71,25 @@ const Icon = ({ name, size = 24, className = '', ...props }: IconProps) => {
     return null;
   }
 
+  // Auto-generate tooltip from semantic name if not provided
+  const autoTooltip = tooltipMap[name as SemanticIconName];
+  const finalTooltip = tooltip || autoTooltip;
+
   return (
-    <div
-      className={`inline-block ${className}`}
-      style={{ 
-        width: size, 
-        height: size,
-        position: 'relative',
-        overflow: 'hidden',
+    <img
+      src={iconSrc}
+      alt={`${name} icon`}
+      title={finalTooltip}
+      width={size}
+      height={size}
+      className={className}
+      style={{
+        objectFit: 'contain',
+        backgroundColor: 'transparent',
+        mixBlendMode: 'multiply',
       }}
       {...props}
-    >
-      <img
-        src={iconSrc}
-        alt={`${name} icon`}
-        style={{
-          width: '300%', // Much bigger to crop more whitespace
-          height: '300%',
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          objectFit: 'contain',
-          mixBlendMode: 'multiply',
-        }}
-      />
-    </div>
+    />
   );
 };
 

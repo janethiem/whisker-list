@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { Icon } from './components'
-import TodoList from './components/TodoList'
-import TodoFilters from './components/TodoFilters'
+import { TodoList } from './components'
 import type { TodoQueryParams } from './types/todo'
 
-function App() {
+const App = () => {
   const [queryParams, setQueryParams] = useState<TodoQueryParams>({})
 
   const handleFiltersChange = (newFilters: TodoQueryParams) => {
@@ -12,16 +11,16 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen" style={{backgroundColor: '#f7f5f3'}}>
       {/* Header */}
-      <div className="bg-amber-50 shadow-sm border-b border-orange-200 backdrop-blur-sm bg-opacity-90">
-        <div className="max-w-4xl mx-auto px-6 py-8">
+      <div className="border-b" style={{backgroundColor: '#ffffff', borderColor: '#d4b8a3'}}>
+        <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl" style={{paddingLeft: '16px', paddingRight: '16px'}}>
           <div className="flex items-center justify-center">
             <div className="flex items-center gap-4">
-              <Icon name="logo" size={56} />
+              <Icon name="logo" size={64} />
               <div className="text-center">
-                <h1 className="text-4xl font-bold text-amber-900">WhiskerList</h1>
-                <p className="text-base text-amber-700 mt-1">Keep track of all your tasks 🐾</p>
+                <h1 className="text-4xl font-bold" style={{color: '#3a3a3a'}}>WhiskerList</h1>
+                <p className="text-lg mt-2" style={{color: '#6b6b6b'}}>Keep track of all your tasks</p>
               </div>
             </div>
           </div>
@@ -29,29 +28,11 @@ function App() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex justify-center px-4 py-8">
-        <div className="w-full max-w-4xl">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Filters Sidebar */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-8">
-                <h3 className="text-xl font-semibold text-amber-900 mb-6 flex items-center gap-3 px-2">
-                  <Icon name="search" size={24} />
-                  Filters
-                </h3>
-                <TodoFilters 
-                  onFiltersChange={handleFiltersChange}
-                  initialFilters={queryParams}
-                />
-              </div>
-            </div>
-
-            {/* Todo List */}
-            <div className="lg:col-span-3">
-              <TodoList queryParams={queryParams} />
-            </div>
-          </div>
-        </div>
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-10 max-w-6xl" style={{paddingLeft: '16px', paddingRight: '16px'}}>
+        <TodoList 
+          queryParams={queryParams} 
+          onFiltersChange={handleFiltersChange}
+        />
       </div>
     </div>
   )

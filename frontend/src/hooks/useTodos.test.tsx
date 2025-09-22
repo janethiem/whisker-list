@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import {
   useTodos,
   useTodo,
@@ -10,7 +10,6 @@ import {
   useUpdateTodo,
   useToggleTodoComplete,
   useDeleteTodo,
-  todoKeys,
 } from './useTodos';
 import * as todoService from '../services/todoService';
 import type { TodoTask, CreateTodoRequest, UpdateTodoRequest, TodoStats } from '../types/todo';
@@ -251,13 +250,13 @@ describe('useTodos Hooks', () => {
 
       let mutationResult;
       await act(async () => {
-        mutationResult = await result.current.mutateAsync(1);
+        mutationResult = await result.current.mutateAsync({ id: 1, currentIsCompleted: false });
       });
 
       expect(mutationResult).toEqual(toggledTodo);
       expect(mockedTodoService.toggleTodoComplete).toHaveBeenCalledWith(
         1,
-        expect.anything()
+        false
       );
     });
   });
