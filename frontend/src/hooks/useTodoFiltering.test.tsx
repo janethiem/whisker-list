@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useTodoFiltering } from './useTodoFiltering';
-import type { TodoTask, TodoQueryParams } from '../types/todo';
+import type { TodoTask } from '../types/todo';
 
 // Mock data
 const mockTodos: TodoTask[] = [
@@ -145,13 +145,13 @@ describe('useTodoFiltering', () => {
     expect(titles).toEqual(['Walk the dog', 'Finish report', 'Call mom', 'Buy groceries']);
   });
 
-  it('should sort by priority', () => {
+  it('should sort by priority (high to low)', () => {
     const { result } = renderHook(() =>
       useTodoFiltering(mockTodos, { sortBy: 'priority' })
     );
 
     const priorities = result.current.map(todo => todo.priority);
-    expect(priorities).toEqual([1, 1, 2, 3]);
+    expect(priorities).toEqual([3, 2, 1, 1]);
   });
 
   it('should sort by due date', () => {

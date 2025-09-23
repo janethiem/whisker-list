@@ -44,7 +44,8 @@ export const useTodoFiltering = (todos: TodoTask[] | undefined, queryParams: Tod
             comparison = aDate - bDate;
             break;
           case 'priority':
-            comparison = (a.priority || 0) - (b.priority || 0);
+            // Sort priority from high to low (3, 2, 1)
+            comparison = (b.priority || 0) - (a.priority || 0);
             break;
           case 'updatedAt':
             comparison = new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
