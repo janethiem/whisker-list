@@ -63,24 +63,24 @@ Manual API testing collection available in `tests/WhiskerList.Api.http` - use wi
 ## 🛠️ Features Implemented
 
 ### Core Functionality
-✅ **Full CRUD Operations** - Create, read, update, delete tasks  
-✅ **Task Management** - Mark complete/incomplete, set priorities (1-3)  
-✅ **Due Dates** - Optional deadline tracking  
+- ✅ **Full CRUD Operations** - Create, read, update, delete tasks
+- ✅ **Task Management** - Mark complete/incomplete, set priorities (1-3)
+- ✅ **Due Dates** - Optional deadline tracking
 
 ### Advanced Features
-✅ **Search & Filtering** - By completion status, priority, and text search
-✅ **Flexible Sorting** - By creation date, title, due date, priority, updated date
-✅ **Instant Performance** - Client-side filtering/sorting without API calls
-✅ **React Memoization** - Optimized rendering with React.memo and useMemo
-✅ **Custom Icons** - Cat-themed icons (Compliments of Nano Banana)
+- ✅ **Search & Filtering** - By completion status, priority, and text search
+- ✅ **Flexible Sorting** - By creation date, title, due date, priority, updated date
+- ✅ **Instant Performance** - Client-side filtering/sorting without API calls
+- ✅ **React Memoization** - Optimized rendering with React.memo and useMemo
+- ✅ **Custom Icons** - Cat-themed icons (Compliments of Nano Banana)
 
 ### Developer Experience
-✅ **Comprehensive Testing** - Frontend unit tests and HTTP API test collection  
-✅ **Type Safety** - Full TypeScript implementation  
-✅ **API Documentation** - Interactive Swagger/OpenAPI docs  
-✅ **Clean Architecture** - Proper separation with DTOs  
-✅ **Error Handling** - Graceful error states and user feedback  
-✅ **Loading States** - Visual feedback during operations  
+- ✅ **Comprehensive Testing** - Frontend unit tests and HTTP API test collection
+- ✅ **Type Safety** - Full TypeScript implementation
+- ✅ **API Documentation** - Interactive Swagger/OpenAPI docs
+- ✅ **Clean Architecture** - Proper separation with DTOs
+- ✅ **Error Handling** - Graceful error states and user feedback
+- ✅ **Loading States** - Visual feedback during operations
 
 ---
 
