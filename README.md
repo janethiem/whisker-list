@@ -18,9 +18,17 @@ A full-stack todo list application with a **React TypeScript** frontend and **AS
    cd whisker-list
    ```
 
-2. **Start the Backend API:**
+2. **Setup and Start the Backend API:**
    ```bash
    cd backend/WhiskerList.Api
+   
+   # Install EF Core tools if not already installed
+   dotnet tool install --global dotnet-ef
+   
+   # Create database and apply migrations
+   dotnet ef database update
+   
+   # Start the API
    dotnet run
    # API runs at http://localhost:5280
    ```
@@ -45,13 +53,11 @@ A full-stack todo list application with a **React TypeScript** frontend and **AS
 ✅ **Full CRUD Operations** - Create, read, update, delete tasks  
 ✅ **Task Management** - Mark complete/incomplete, set priorities (1-3)  
 ✅ **Due Dates** - Optional deadline tracking  
-✅ **Real-time Updates** - Optimistic UI updates with React Query  
 
 ### Advanced Features
 ✅ **Search & Filtering** - By completion status, priority, and text search  
 ✅ **Flexible Sorting** - By creation date, title, due date, priority, updated date  
-✅ **Statistics API** - Task completion metrics endpoint  
-✅ **Custom Icons** - Cat-themed icon set for UI elements  
+✅ **Custom Icons** - Cat-themed icons (Compliments of Nano Banana)
 
 ### Developer Experience
 ✅ **Comprehensive Testing** - Unit tests for both frontend and backend  
@@ -84,13 +90,12 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 - **Tailwind CSS** - Utility-first CSS framework
 
 ### Key Design Principles
-- **Clean Architecture** - Separation of concerns with DTOs
+- **Layered Architecture** - Separation of API contracts and data models with DTOs
 - **RESTful API Design** - Intuitive endpoints and HTTP semantics
 - **Type Safety** - Full TypeScript coverage
-- **Performance** - Optimistic updates and efficient caching
+- **Data Management** - Server state caching and synchronization with React Query
 
 ### UI Design
-- **Custom Icon System** - Cat-themed PNG icons with semantic mapping
 - **Inline Styling** - Custom CSS-in-JS for theme consistency
 - **Component Structure** - Organized by feature (todo/) and reusable UI components
 
@@ -99,7 +104,7 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 ## 📝 Assumptions and Implementation Notes
 
 ### Data Model Assumptions
-- **Task IDs**: Auto-incrementing integers (sufficient for MVP scale)
+- **Task IDs**: Auto-incrementing integers (appropriate for personal task management)
 - **Priority System**: Simple 1-3 scale (Low, Medium, High) for user simplicity
 - **Due Dates**: Optional to support both deadline-driven and casual task management
 - **Soft Delete**: Not implemented in MVP - tasks are permanently deleted
@@ -121,26 +126,26 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 ## 📈 Scalability Considerations
 
 ### Current Architecture Strengths
-- **Stateless API**: Horizontally scalable backend design
+- **Clean API Design**: RESTful endpoints with proper HTTP semantics
+- **Dependency Injection**: Proper service lifetime management
+- **Server-side Filtering**: Database-level query optimization
 - **Database Migrations**: Schema versioning for safe deployments
 - **Component Reusability**: Modular frontend architecture
-- **Query Optimization**: React Query provides client-side caching
 
 ### Known Limitations
-- **SQLite**: Single-file database limits concurrent access in production
-- **No Pagination**: All tasks loaded at once (acceptable for MVP user loads)
+- **SQLite**: File-level locking limits high-concurrency scenarios
+- **No Pagination**: All matching results loaded at once (acceptable for MVP scale)
 - **No Authentication**: Single-user application model
-- **Client-side Filtering**: Full dataset transferred for search/filter operations
 
 ---
 
 ## 🚀 Future Enhancements
 
 ### Performance & Scale
-- **Pagination Implementation**: Server-side pagination or infinite scroll for large datasets
+- **Pagination Implementation**: Server-side pagination for large datasets
 - **Database Migration**: PostgreSQL or SQL Server for production workloads
 - **Caching Layer**: Redis for session management and frequently accessed data
-- **CDN Integration**: Static asset optimization and global distribution
+- **Database Optimization**: Indexing and query optimization
 
 ### User Experience
 - **Statistics Dashboard**: Utilize existing `/todo-tasks/stats` endpoint for productivity insights
@@ -152,7 +157,6 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 - **JWT Authentication**: User registration, login, and session management
 - **Role-Based Access**: Admin features and user permissions
 - **API Rate Limiting**: Prevent abuse and ensure service stability
-- **Input Sanitization**: XSS protection and SQL injection prevention
 
 ### DevOps & Monitoring
 - **Dockerization**: Container-based deployment with docker-compose
