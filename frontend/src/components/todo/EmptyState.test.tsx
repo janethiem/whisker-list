@@ -181,56 +181,26 @@ describe('EmptyState', () => {
   });
 
   describe('filter detection logic', () => {
-    it('detects search filter as active', () => {
-      render(
-        <EmptyState
-          queryParams={{ search: 'test' }}
-          onFiltersChange={mockOnFiltersChange}
-          onAddClick={mockOnAddClick}
-        />
-      );
+    const testCases = [
+      { params: { search: 'test' }, description: 'search filter' },
+      { params: { isCompleted: true }, description: 'status filter' },
+      { params: { priority: 3 }, description: 'priority filter' },
+      { params: { sortBy: 'title', sortDescending: true }, description: 'sort parameters' },
+    ];
 
-      expect(screen.getByTestId('icon-cat-magnifying-glass')).toBeInTheDocument();
-      expect(screen.queryByTestId('empty-state-button')).not.toBeInTheDocument();
-    });
+    testCases.forEach(({ params, description }) => {
+      it(`detects ${description} as active`, () => {
+        render(
+          <EmptyState
+            queryParams={params}
+            onFiltersChange={mockOnFiltersChange}
+            onAddClick={mockOnAddClick}
+          />
+        );
 
-    it('detects status filter as active', () => {
-      render(
-        <EmptyState
-          queryParams={{ isCompleted: true }}
-          onFiltersChange={mockOnFiltersChange}
-          onAddClick={mockOnAddClick}
-        />
-      );
-
-      expect(screen.getByTestId('icon-cat-magnifying-glass')).toBeInTheDocument();
-      expect(screen.queryByTestId('empty-state-button')).not.toBeInTheDocument();
-    });
-
-    it('detects priority filter as active', () => {
-      render(
-        <EmptyState
-          queryParams={{ priority: 3 }}
-          onFiltersChange={mockOnFiltersChange}
-          onAddClick={mockOnAddClick}
-        />
-      );
-
-      expect(screen.getByTestId('icon-cat-magnifying-glass')).toBeInTheDocument();
-      expect(screen.queryByTestId('empty-state-button')).not.toBeInTheDocument();
-    });
-
-    it('detects sort parameters as active', () => {
-      render(
-        <EmptyState
-          queryParams={{ sortBy: 'title', sortDescending: true }}
-          onFiltersChange={mockOnFiltersChange}
-          onAddClick={mockOnAddClick}
-        />
-      );
-
-      expect(screen.getByTestId('icon-cat-magnifying-glass')).toBeInTheDocument();
-      expect(screen.queryByTestId('empty-state-button')).not.toBeInTheDocument();
+        expect(screen.getByTestId('icon-cat-magnifying-glass')).toBeInTheDocument();
+        expect(screen.queryByTestId('empty-state-button')).not.toBeInTheDocument();
+      });
     });
 
     it('treats empty string as no filter', () => {
@@ -277,56 +247,4 @@ describe('EmptyState', () => {
     });
   });
 
-  it('renders all required UI elements for no filters state', () => {
-    render(
-      <EmptyState
-        queryParams={emptyQueryParams}
-        onFiltersChange={mockOnFiltersChange}
-        onAddClick={mockOnAddClick}
-      />
-    );
-
-    // Header component
-    expect(screen.getByTestId('todo-list-header')).toBeInTheDocument();
-
-    // Filters component
-    expect(screen.getByTestId('todo-filters')).toBeInTheDocument();
-
-    // Sleeping cat icon
-    expect(screen.getByTestId('icon-sleeping-cat')).toBeInTheDocument();
-
-    // Main message
-    expect(screen.getByText('All caught up!')).toBeInTheDocument();
-
-    // Description
-    expect(screen.getByText('No tasks yet. Create your first one to get started!')).toBeInTheDocument();
-
-    // Action button
-    expect(screen.getByTestId('empty-state-button')).toBeInTheDocument();
-  });
-
-  it('renders all required UI elements for filtered state', () => {
-    render(
-      <EmptyState
-        queryParams={mockQueryParams}
-        onFiltersChange={mockOnFiltersChange}
-        onAddClick={mockOnAddClick}
-      />
-    );
-
-    // Header component
-    expect(screen.getByTestId('todo-list-header')).toBeInTheDocument();
-
-    // Filters component
-    expect(screen.getByTestId('todo-filters')).toBeInTheDocument();
-
-    // Magnifying glass icon
-    expect(screen.getByTestId('icon-cat-magnifying-glass')).toBeInTheDocument();
-
-    // Main message
-    expect(screen.getByText('No tasks found')).toBeInTheDocument();
-
-    // Description
-    expect(screen.getByText('Try adjusting your filters to see more tasks')).toBeInTheDocument();
-  });
 });

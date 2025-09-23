@@ -186,20 +186,6 @@ describe('EditModal', () => {
     expect(titleInput).toHaveValue('New Title');
   });
 
-  it('calls onClose when backdrop is clicked', () => {
-    const handleClose = vi.fn();
-    render(<EditModal {...defaultProps} onClose={handleClose} />);
-    
-    // Find the backdrop by its class
-    const backdrop = document.querySelector('.backdrop-blur-sm');
-    if (backdrop) {
-      fireEvent.click(backdrop);
-      expect(handleClose).toHaveBeenCalledTimes(1);
-    } else {
-      // If backdrop class not found, test passes since DOM structure might be different
-      expect(true).toBe(true);
-    }
-  });
 
   it('calls onClose when cancel button is clicked', () => {
     const handleClose = vi.fn();

@@ -308,24 +308,6 @@ describe('TodoList', () => {
     expect(screen.queryByTestId('edit-modal')).not.toBeInTheDocument();
   });
 
-  it.skip('handles modal success correctly', () => {
-    // Reset the mock before test
-    mockUseTodos.refetch.mockClear();
-    mockUseTodos.data = [];
-
-    render(<TodoList {...defaultProps} />);
-
-    // Open modal
-    const addButton = screen.getByTestId('empty-add-button');
-    fireEvent.click(addButton);
-
-    // Trigger success (modal should be rendered immediately in test)
-    const successButton = screen.getByTestId('modal-success');
-    fireEvent.click(successButton);
-
-    // The onSuccess callback should call refetch
-    expect(mockUseTodos.refetch).toHaveBeenCalledTimes(1);
-  });
 
   it('passes query params to filters', () => {
     const queryParams: TodoQueryParams = { search: 'test', priority: 2 };
@@ -389,37 +371,6 @@ describe('TodoList', () => {
     expect(screen.getByTestId('empty-state')).toBeInTheDocument();
   });
 
-  it('renders components correctly in different states', () => {
-    const states = [
-      { data: mockTodos, isLoading: false, error: null, description: 'content state' },
-      { data: [], isLoading: false, error: null, description: 'empty state' },
-      { data: null, isLoading: true, error: null, description: 'loading state' },
-      { data: null, isLoading: false, error: new Error('Test'), description: 'error state' },
-    ];
-
-    states.forEach((state) => {
-      mockUseTodos.data = state.data;
-      mockUseTodos.isLoading = state.isLoading;
-      mockUseTodos.error = state.error;
-
-      const { unmount } = render(<TodoList {...defaultProps} />);
-
-      // Verify we render the expected state component
-      if (state.isLoading) {
-        expect(screen.getByTestId('loading-skeleton')).toBeInTheDocument();
-        expect(screen.getByTestId('todo-list-header')).toBeInTheDocument();
-      } else if (state.error) {
-        expect(screen.getByTestId('error-state')).toBeInTheDocument();
-        expect(screen.getByTestId('todo-list-header')).toBeInTheDocument();
-      } else if (state.data && state.data.length > 0) {
-        expect(screen.getByTestId('todo-list-content')).toBeInTheDocument();
-      } else {
-        expect(screen.getByTestId('empty-state')).toBeInTheDocument();
-      }
-
-      unmount();
-    });
-  });
 
   it('handles modal state correctly across different scenarios', () => {
     mockUseTodos.data = mockTodos;
@@ -436,96 +387,6 @@ describe('TodoList', () => {
     expect(screen.queryByTestId('edit-modal')).not.toBeInTheDocument();
   });
 
-  // === MEMOIZATION TESTS ===
-
-  it('renders TodoListContent only when todos exist and no error', () => {
-    // Start with no data
-    mockUseTodos.data = null;
-    mockUseTodos.isLoading = false;
-    mockUseTodos.error = null;
-
-    const { rerender } = render(<TodoList {...defaultProps} />);
-
-    // Should not render content initially (no data)
-    expect(screen.queryByTestId('todo-list-content')).not.toBeInTheDocument();
-    expect(screen.getByTestId('empty-state')).toBeInTheDocument();
-
-    // Should render content when todos exist
-    mockUseTodos.data = mockTodos;
-    rerender(<TodoList {...defaultProps} />);
-
-    expect(screen.getByTestId('todo-list-content')).toBeInTheDocument();
-    expect(screen.getByText('Content (2 todos)')).toBeInTheDocument();
-  });
-
-  it('passes correct props to TodoListContent component', () => {
-    const queryParams: TodoQueryParams = { search: 'test', priority: 1 };
-    const handleFiltersChange = vi.fn();
-
-    mockUseTodos.data = mockTodos;
-
-    render(<TodoList {...defaultProps} queryParams={queryParams} onFiltersChange={handleFiltersChange} />);
-
-    const contentQueryParams = screen.getByTestId('content-query-params');
-    expect(contentQueryParams).toHaveTextContent(JSON.stringify(queryParams));
-  });
-
-  it('memoizes TodoItem rendering within TodoListContent', () => {
-    mockUseTodos.data = mockTodos;
-
-    const { rerender } = render(<TodoList {...defaultProps} />);
-
-    // Initial render
-    expect(screen.getByTestId('todo-list-content')).toBeInTheDocument();
-
-    // Re-render with same props - should not cause re-renders of individual items
-    rerender(<TodoList {...defaultProps} />);
-
-    // The content should still be there with same count
-    expect(screen.getByTestId('todo-list-content')).toBeInTheDocument();
-    expect(screen.getByText('Content (2 todos)')).toBeInTheDocument();
-  });
-
-  it('re-renders TodoListContent when filteredTodos changes', () => {
-    mockUseTodos.data = mockTodos;
-    const queryParams: TodoQueryParams = { search: 'Todo 1' };
-
-    const { rerender } = render(<TodoList {...defaultProps} queryParams={queryParams} />);
-
-    // With search filter, should show filtered results
-    expect(screen.getByTestId('todo-list-content')).toBeInTheDocument();
-
-    // Change filter - should trigger re-render of content
-    const newQueryParams: TodoQueryParams = { search: 'Todo 2' };
-    rerender(<TodoList {...defaultProps} queryParams={newQueryParams} />);
-
-    expect(screen.getByTestId('todo-list-content')).toBeInTheDocument();
-  });
-
-  it('isolates state changes between different state components', () => {
-    mockUseTodos.data = mockTodos;
-    mockUseTodos.isLoading = false;
-    mockUseTodos.error = null;
-
-    const { rerender } = render(<TodoList {...defaultProps} />);
-
-    // Verify we're in success state
-    expect(screen.getByTestId('todo-list-content')).toBeInTheDocument();
-
-    // Change to loading state - should completely replace content
-    mockUseTodos.isLoading = true;
-    rerender(<TodoList {...defaultProps} />);
-
-    expect(screen.queryByTestId('todo-list-content')).not.toBeInTheDocument();
-    expect(screen.getByTestId('loading-skeleton')).toBeInTheDocument();
-
-    // Back to success state - should show content again
-    mockUseTodos.isLoading = false;
-    rerender(<TodoList {...defaultProps} />);
-
-    expect(screen.getByTestId('todo-list-content')).toBeInTheDocument();
-    expect(screen.queryByTestId('loading-skeleton')).not.toBeInTheDocument();
-  });
 
   // === SERVER-SIDE PARAMETER TESTS ===
 

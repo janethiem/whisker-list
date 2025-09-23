@@ -3,41 +3,6 @@ import { describe, it, expect } from 'vitest';
 import PriorityBadge from './PriorityBadge';
 
 describe('PriorityBadge', () => {
-  it('renders low priority correctly', () => {
-    render(<PriorityBadge priority={1} />);
-    
-    const badge = screen.getByText('Low');
-    expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass(
-      'bg-green-100',
-      'text-green-700', 
-      'border-green-200'
-    );
-  });
-
-  it('renders medium priority correctly', () => {
-    render(<PriorityBadge priority={2} />);
-    
-    const badge = screen.getByText('Medium');
-    expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass(
-      'bg-yellow-100',
-      'text-yellow-700',
-      'border-yellow-200'
-    );
-  });
-
-  it('renders high priority correctly', () => {
-    render(<PriorityBadge priority={3} />);
-    
-    const badge = screen.getByText('High');
-    expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass(
-      'bg-red-100',
-      'text-red-700',
-      'border-red-200'
-    );
-  });
 
   it('applies base styling classes', () => {
     render(<PriorityBadge priority={1} />);

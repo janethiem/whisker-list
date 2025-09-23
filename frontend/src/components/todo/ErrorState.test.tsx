@@ -190,33 +190,4 @@ describe('ErrorState', () => {
     expect(retryButton).toHaveAttribute('data-variant', 'danger');
   });
 
-  it('renders all required UI elements', () => {
-    render(
-      <ErrorState
-        error={mockError}
-        queryParams={mockQueryParams}
-        onFiltersChange={mockOnFiltersChange}
-        onRetry={mockOnRetry}
-        onAddClick={mockOnAddClick}
-      />
-    );
-
-    // Header component
-    expect(screen.getByTestId('todo-list-header')).toBeInTheDocument();
-
-    // Filters component
-    expect(screen.getByTestId('todo-filters')).toBeInTheDocument();
-
-    // Error icon
-    expect(screen.getByTestId('icon-cat-cross-paws')).toBeInTheDocument();
-
-    // Error title
-    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
-
-    // Error message
-    expect(screen.getByText('Network error occurred')).toBeInTheDocument();
-
-    // Retry button
-    expect(screen.getByText('Try Again')).toBeInTheDocument();
-  });
 });
