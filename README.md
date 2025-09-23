@@ -45,6 +45,19 @@ A full-stack todo list application with a **React TypeScript** frontend and **AS
    - **Frontend UI**: http://localhost:5173
    - **API Documentation**: http://localhost:5280/swagger
 
+## 🧪 Running Tests
+
+### Frontend Tests
+```bash
+cd frontend
+npm test          # Interactive mode
+npm run test:run  # Single run
+npm run test:coverage  # With coverage report
+```
+
+### API Testing
+Manual API testing collection available in `tests/WhiskerList.Api.http` - use with REST Client extension in VS Code or any HTTP client.
+
 ---
 
 ## 🛠️ Features Implemented
@@ -60,7 +73,7 @@ A full-stack todo list application with a **React TypeScript** frontend and **AS
 ✅ **Custom Icons** - Cat-themed icons (Compliments of Nano Banana)
 
 ### Developer Experience
-✅ **Comprehensive Testing** - Unit tests for both frontend and backend  
+✅ **Comprehensive Testing** - Frontend unit tests and HTTP API test collection  
 ✅ **Type Safety** - Full TypeScript implementation  
 ✅ **API Documentation** - Interactive Swagger/OpenAPI docs  
 ✅ **Clean Architecture** - Proper separation with DTOs  
@@ -157,6 +170,12 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 - **JWT Authentication**: User registration, login, and session management
 - **Role-Based Access**: Admin features and user permissions
 - **API Rate Limiting**: Prevent abuse and ensure service stability
+
+### Testing & Quality Assurance
+- **Backend Unit Testing**: Controller and service layer test coverage
+- **Integration Testing**: End-to-end API testing for critical workflows
+- **E2E Testing**: Browser automation for complete user journeys
+- **Performance Testing**: Load testing and response time optimization
 
 ### DevOps & Monitoring
 - **Dockerization**: Container-based deployment with docker-compose
