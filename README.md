@@ -10,6 +10,14 @@ A full-stack todo list application with a **React TypeScript** frontend and **AS
 - [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 - [Node.js 18+](https://nodejs.org/) and npm
 
+### macOS (Homebrew) quick install
+```bash
+brew update
+brew install dotnet@9
+# If you have multiple .NET versions installed, you may need to link:
+brew link --force dotnet@9
+```
+
 ### Setup Instructions
 
 1. **Clone the repository:**
@@ -69,16 +77,16 @@ Manual API testing collection available in `tests/WhiskerList.Api.http` - use wi
 
 ### Advanced Features
 - ✅ **Search & Filtering** - By completion status, priority, and text search
-- ✅ **Flexible Sorting** - By creation date, title, due date, priority, updated date
-- ✅ **Instant Performance** - Client-side filtering/sorting without API calls
-- ✅ **React Memoization** - Optimized rendering with React.memo and useMemo
+- ✅ **Flexible Sorting** - By creation date, title, due date, priority
+- ✅ **Instant Performance** - Client-side filtering/sorting without extraneous API calls
+- ✅ **React Memoization** - Optimized rendering with React.memo, useMemo and useCallback
 - ✅ **Custom Icons** - Cat-themed icons (Compliments of Nano Banana)
 
 ### Developer Experience
 - ✅ **Comprehensive Testing** - Frontend unit tests and HTTP API test collection
-- ✅ **Type Safety** - Full TypeScript implementation
+- ✅ **Type Safety** - TypeScript & C# implementation
 - ✅ **API Documentation** - Interactive Swagger/OpenAPI docs
-- ✅ **Clean Architecture** - Proper separation with DTOs
+- ✅ **Separation of concerns** – DTOs at the API edge, EF Core for data access, explicit mapping to isolate transport models from domain entities.
 - ✅ **Error Handling** - Graceful error states and user feedback
 - ✅ **Loading States** - Visual feedback during operations
 
@@ -99,20 +107,10 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 - **SQLite** - Zero-config embedded database
 
 **Frontend:**
-- **React 18** with TypeScript - Type-safe component library
+- **React 19** with TypeScript - Type-safe component library
 - **Vite** - Fast build tool and dev server
 - **TanStack Query** - Server state management
 - **Tailwind CSS** - Utility-first CSS framework
-
-### Key Design Principles
-- **Layered Architecture** - Separation of API contracts and data models with DTOs
-- **RESTful API Design** - Intuitive endpoints and HTTP semantics
-- **Type Safety** - Full TypeScript coverage
-- **Data Management** - Server state caching and synchronization with React Query
-
-### UI Design
-- **Inline Styling** - Custom CSS-in-JS for theme consistency
-- **Component Structure** - Organized by feature (todo/) and reusable UI components
 
 ---
 
@@ -135,7 +133,6 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 - **State Management**: React Query for server state, local React state for UI
 - **Performance Optimization**: Client-side filtering/sorting without extraneous API calls
 - **Styling**: Tailwind utility classes with custom inline styles for theming
-- **Form Handling**: Controlled components with client-side validation
 
 ---
 
@@ -143,8 +140,7 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 
 ### Current Architecture Strengths
 - **Clean API Design**: RESTful endpoints with proper HTTP semantics
-- **Dependency Injection**: Proper service lifetime management
-- **React Memoization** - Optimized rendering with React.memo and useMemo
+- **React Memoization** - Optimized rendering with React.memo, useMemo, and useCallback
 - **Database Migrations**: Schema versioning for safe deployments
 - **Component Reusability**: Modular frontend architecture
 
@@ -168,6 +164,7 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 - **Soft Delete System**: Allow users to undo task deletion with recovery period
 - **Bulk Operations**: Multi-select and batch actions for task management
 - **Drag & Drop**: Visual task reordering and priority management
+- **Sort by Updated At**: Use existing infrastructure to sort by Updated time
 
 ### Security & Authentication
 - **JWT Authentication**: User registration, login, and session management
