@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Input, Select, Button } from '../ui';
-import { UI_TEXT } from '../../constants/strings';
-import type { TodoQueryParams } from '../../types/todo';
+import { Input, Select, Button } from '../../ui';
+import { UI_TEXT } from '../../../constants/strings';
+import type { TodoQueryParams } from '../../../types/todo';
 
 interface TodoFiltersProps {
   onFiltersChange: (filters: TodoQueryParams) => void;

@@ -1,5 +1,5 @@
-import { Icon, Button } from '../ui';
-import { UI_TEXT } from '../../constants/strings';
+import { Icon, Button } from '../../ui';
+import { UI_TEXT } from '../../../constants/strings';
 
 interface TodoListHeaderProps {
   todoCount?: number;

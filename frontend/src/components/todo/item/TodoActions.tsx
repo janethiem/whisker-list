@@ -1,5 +1,5 @@
-import Icon from '../ui/Icon';
-import { UI_TEXT } from '../../constants/strings';
+import Icon from '../../ui/Icon';
+import { UI_TEXT } from '../../../constants/strings';
 
 interface TodoActionsProps {
   onEdit: () => void;

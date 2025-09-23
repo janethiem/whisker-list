@@ -1,8 +1,8 @@
-import { Icon, Button } from '../ui';
-import TodoFilters from './TodoFilters';
-import TodoListHeader from './TodoListHeader';
-import { UI_TEXT } from '../../constants/strings';
-import type { TodoQueryParams } from '../../types/todo';
+import { Icon, Button } from '../../ui';
+import TodoFilters from '../features/TodoFilters';
+import TodoListHeader from '../containers/TodoListHeader';
+import { UI_TEXT } from '../../../constants/strings';
+import type { TodoQueryParams } from '../../../types/todo';
 
 interface EmptyStateProps {
   queryParams: TodoQueryParams;

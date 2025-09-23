@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import TodoItem from './TodoItem';
-import TodoFilters from './TodoFilters';
+import TodoItem from '../item/TodoItem';
+import TodoFilters from '../features/TodoFilters';
 import TodoListHeader from './TodoListHeader';
-import { useTodoFiltering } from '../../hooks/useTodoFiltering';
-import type { TodoTask, TodoQueryParams } from '../../types/todo';
+import { useTodoFiltering } from '../../../hooks/useTodoFiltering';
+import type { TodoTask, TodoQueryParams } from '../../../types/todo';
 
 interface TodoListContentProps {
   todos: TodoTask[];

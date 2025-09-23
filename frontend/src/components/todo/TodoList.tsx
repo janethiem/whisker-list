@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import EditModal from './EditModal';
-import TodoListHeader from './TodoListHeader';
-import TodoFilters from './TodoFilters';
-import LoadingSkeleton from './LoadingSkeleton';
-import TodoListContent from './TodoListContent';
-import ErrorState from './ErrorState';
-import EmptyState from './EmptyState';
+import EditModal from './features/EditModal';
+import TodoListHeader from './containers/TodoListHeader';
+import TodoFilters from './features/TodoFilters';
+import LoadingSkeleton from './states/LoadingSkeleton';
+import TodoListContent from './containers/TodoListContent';
+import ErrorState from './states/ErrorState';
+import EmptyState from './states/EmptyState';
 import { useTodos } from '../../hooks/useTodos';
 import type { TodoTask, TodoQueryParams } from '../../types/todo';
 
