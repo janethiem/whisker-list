@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import CompletionCheckbox from './CompletionCheckbox';
 
 // Mock the Icon component
-vi.mock('../ui/Icon', () => ({
+vi.mock('../../ui/Icon', () => ({
   default: ({ name, size, className }: any) => (
     <div data-testid="mock-icon" data-name={name} data-size={size} className={className}>
       {name}

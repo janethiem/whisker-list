@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import TodoMeta from './TodoMeta';
 
 // Mock the Icon component
-vi.mock('../ui/Icon', () => ({
+vi.mock('../../ui/Icon', () => ({
   default: ({ name, size }: any) => (
     <div data-testid="mock-icon" data-name={name} data-size={size}>
       {name}

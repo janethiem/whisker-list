@@ -4,13 +4,13 @@ import EditModal from './EditModal';
 import type { TodoTask } from '../../types/todo';
 
 // Mock the UI components
-vi.mock('../ui/Icon', () => ({
+vi.mock('../../ui/Icon', () => ({
   default: ({ name, size }: any) => (
     <div data-testid="mock-icon" data-name={name} data-size={size} />
   )
 }));
 
-vi.mock('../ui/Button', () => ({
+vi.mock('../../ui/Button', () => ({
   default: ({ children, onClick, type, variant, disabled, isLoading, className }: any) => (
     <button
       type={type}
@@ -26,7 +26,7 @@ vi.mock('../ui/Button', () => ({
   )
 }));
 
-vi.mock('../ui/FormField', () => ({
+vi.mock('../../ui/FormField', () => ({
   Input: ({ label, name, value, onChange, required, maxLength, placeholder }: any) => (
     <div>
       {label && <label htmlFor={name}>{label} {required && '*'}</label>}
@@ -83,13 +83,13 @@ const mockUpdateTodo = {
   isPending: false,
 };
 
-vi.mock('../../hooks/useTodos', () => ({
+vi.mock('../../../hooks/useTodos', () => ({
   useCreateTodo: () => mockCreateTodo,
   useUpdateTodo: () => mockUpdateTodo,
 }));
 
 // Mock UI_TEXT constants
-vi.mock('../../constants/strings', () => ({
+vi.mock('../../../constants/strings', () => ({
   UI_TEXT: {
     EDIT_TASK: 'Edit Task',
     NEW_TASK: 'New Task',

@@ -29,7 +29,7 @@ namespace WhiskerList.Api.Controllers
             int? priority = null,
             string? search = null,
             string sortBy = "createdAt",
-            bool sortDescending = false)
+            bool sortDescending = true)
         {
             try
             {

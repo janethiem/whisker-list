@@ -35,7 +35,7 @@ vi.mock('./TodoItem', () => ({
   )
 }));
 
-vi.mock('./TodoFilters', () => ({
+vi.mock('./features/TodoFilters', () => ({
   default: ({ onFiltersChange, initialFilters }: any) => (
     <div data-testid="todo-filters">
       <button
@@ -51,7 +51,7 @@ vi.mock('./TodoFilters', () => ({
   )
 }));
 
-vi.mock('./TodoListHeader', () => ({
+vi.mock('./containers/TodoListHeader', () => ({
   default: ({ todoCount, onAddClick }: any) => (
     <div data-testid="todo-list-header">
       <span>Header {todoCount !== undefined ? `(${todoCount} tasks)` : ''}</span>
@@ -62,11 +62,11 @@ vi.mock('./TodoListHeader', () => ({
   )
 }));
 
-vi.mock('./LoadingSkeleton', () => ({
+vi.mock('./states/LoadingSkeleton', () => ({
   default: () => <div data-testid="loading-skeleton">Loading...</div>
 }));
 
-vi.mock('./TodoListContent', () => ({
+vi.mock('./containers/TodoListContent', () => ({
   default: ({ todos, queryParams, onFiltersChange, onEdit, onAddClick }: any) => (
     <div data-testid="todo-list-content">
       <div>Content ({todos?.length || 0} todos)</div>
@@ -95,7 +95,7 @@ vi.mock('./TodoListContent', () => ({
   )
 }));
 
-vi.mock('./ErrorState', () => ({
+vi.mock('./states/ErrorState', () => ({
   default: ({ error, queryParams: _, onFiltersChange: __, onRetry, onAddClick }: any) => (
     <div data-testid="error-state">
       <div data-testid="todo-list-header">Header</div>
@@ -106,7 +106,7 @@ vi.mock('./ErrorState', () => ({
   )
 }));
 
-vi.mock('./EmptyState', () => ({
+vi.mock('./states/EmptyState', () => ({
   default: ({ queryParams: _, onFiltersChange: __, onAddClick }: any) => (
     <div data-testid="empty-state">
       <span>Empty State</span>
@@ -115,7 +115,7 @@ vi.mock('./EmptyState', () => ({
   )
 }));
 
-vi.mock('./EditModal', () => ({
+vi.mock('./features/EditModal', () => ({
   default: ({ todo, onClose, onSuccess }: any) => (
     <div data-testid="edit-modal">
       <span>Modal for: {todo ? `Edit ${todo.id}` : 'New Todo'}</span>

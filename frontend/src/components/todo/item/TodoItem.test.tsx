@@ -51,7 +51,7 @@ const mockUpdateTodo = {
   mutateAsync: vi.fn(),
 };
 
-vi.mock('../../hooks/useTodos', () => ({
+vi.mock('../../../hooks/useTodos', () => ({
   useToggleTodoComplete: () => mockToggleTodoComplete,
   useDeleteTodo: () => mockDeleteTodo,
   useUpdateTodo: () => mockUpdateTodo,

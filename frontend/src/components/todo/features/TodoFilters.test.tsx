@@ -4,7 +4,7 @@ import TodoFilters from './TodoFilters';
 import type { TodoQueryParams } from '../../types/todo';
 
 // Mock the UI components
-vi.mock('../ui', () => ({
+vi.mock('../../ui', () => ({
   Input: ({ value, onChange, placeholder, type }: any) => (
     <input
       type={type || 'text'}
@@ -27,7 +27,7 @@ vi.mock('../ui', () => ({
 }));
 
 // Mock UI_TEXT constants
-vi.mock('../../constants/strings', () => ({
+vi.mock('../../../constants/strings', () => ({
   UI_TEXT: {
     SEARCH_TASKS: 'Search tasks...',
     ALL_TASKS: 'All Tasks',

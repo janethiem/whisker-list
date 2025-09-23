@@ -172,7 +172,22 @@ describe('useTodoFiltering', () => {
       useTodoFiltering(mockTodos, { sortBy: 'createdAt' })
     );
 
-    // Should be in creation order: earliest first
+    // Should be in creation order: most recent first
+    const createdDates = result.current.map(todo => todo.createdAt);
+    expect(createdDates).toEqual([
+      '2024-01-01T10:00:00Z', // Buy groceries (latest)
+      '2024-01-01T09:00:00Z', // Walk the dog
+      '2024-01-01T08:00:00Z', // Finish report
+      '2024-01-01T07:00:00Z', // Call mom (earliest)
+    ]);
+  });
+
+  it('should sort by created date in reverse order when sortDescending is true', () => {
+    const { result } = renderHook(() =>
+      useTodoFiltering(mockTodos, { sortBy: 'createdAt', sortDescending: true })
+    );
+
+    // Should be in creation order: earliest first when sortDescending is true
     const createdDates = result.current.map(todo => todo.createdAt);
     expect(createdDates).toEqual([
       '2024-01-01T07:00:00Z', // Call mom (earliest)

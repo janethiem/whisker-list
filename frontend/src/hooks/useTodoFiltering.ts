@@ -51,7 +51,7 @@ export const useTodoFiltering = (todos: TodoTask[] | undefined, queryParams: Tod
             comparison = new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
             break;
           case 'createdAt':
-            comparison = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+            comparison = new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
             break;
           default:
             comparison = 0;

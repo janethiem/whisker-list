@@ -3,8 +3,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import ErrorState from './ErrorState';
 import type { TodoQueryParams } from '../../types/todo';
 
-// Mock the sub-components
-vi.mock('./TodoFilters', () => ({
+// Mock the sub-components at the top level
+vi.mock('../features/TodoFilters', () => ({
   default: ({ initialFilters }: {
     onFiltersChange: (filters: TodoQueryParams) => void;
     initialFilters: TodoQueryParams
@@ -15,7 +15,7 @@ vi.mock('./TodoFilters', () => ({
   )
 }));
 
-vi.mock('./TodoListHeader', () => ({
+vi.mock('../containers/TodoListHeader', () => ({
   default: ({ onAddClick }: { onAddClick: () => void }) => (
     <div data-testid="todo-list-header">
       <button onClick={onAddClick} data-testid="add-task-btn">
@@ -26,7 +26,7 @@ vi.mock('./TodoListHeader', () => ({
 }));
 
 // Mock the UI components
-vi.mock('../ui', () => ({
+vi.mock('../../ui', () => ({
   Icon: ({ name, size, className }: { name: string; size: number; className?: string }) => (
     <div data-testid={`icon-${name}`} style={{ width: size, height: size }} className={className}>
       Icon: {name}

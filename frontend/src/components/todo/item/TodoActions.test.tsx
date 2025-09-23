@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import TodoActions from './TodoActions';
 
 // Mock the Icon component
-vi.mock('../ui/Icon', () => ({
+vi.mock('../../ui/Icon', () => ({
   default: ({ name, size }: any) => (
     <div data-testid="mock-icon" data-name={name} data-size={size}>
       {name}
@@ -12,7 +12,7 @@ vi.mock('../ui/Icon', () => ({
 }));
 
 // Mock the UI_TEXT constants
-vi.mock('../../constants/strings', () => ({
+vi.mock('../../../constants/strings', () => ({
   UI_TEXT: {
     EDIT_DUE_DATE_AND_PRIORITY: 'Edit due date and priority',
     EDIT: 'Edit',

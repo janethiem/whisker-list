@@ -4,7 +4,7 @@ import TodoListContent from './TodoListContent';
 import type { TodoTask, TodoQueryParams } from '../../types/todo';
 
 // Mock the sub-components
-vi.mock('./TodoItem', () => ({
+vi.mock('../item/TodoItem', () => ({
   default: ({ todo, onEdit }: { todo: TodoTask; onEdit: (todo: TodoTask) => void }) => (
     <div data-testid={`todo-item-${todo.id}`}>
       <span>{todo.title}</span>
@@ -15,7 +15,7 @@ vi.mock('./TodoItem', () => ({
   )
 }));
 
-vi.mock('./TodoFilters', () => ({
+vi.mock('../features/TodoFilters', () => ({
   default: ({ onFiltersChange, initialFilters }: {
     onFiltersChange: (filters: TodoQueryParams) => void;
     initialFilters: TodoQueryParams
