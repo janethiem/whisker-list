@@ -83,7 +83,7 @@ export const useCreateTodo = () => {
 
 /**
  * Hook to update a todo
- * ✏️ This is for PUT /todo-tasks/{id}
+ * ✏️ This is for PATCH /todo-tasks/{id}
  */
 export const useUpdateTodo = () => {
   const queryClient = useQueryClient();
@@ -112,7 +112,7 @@ export const useToggleTodoComplete = () => {
     mutationFn: ({ id, currentIsCompleted }: { id: number; currentIsCompleted: boolean }) => 
       toggleTodoComplete(id, currentIsCompleted),
     onSuccess: (updatedTodo) => {
-      // Optimistically update the todo in cache
+      // Update the specific todo in cache
       queryClient.setQueryData(todoKeys.detail(updatedTodo.id), updatedTodo);
       queryClient.invalidateQueries({ queryKey: todoKeys.lists() });
       queryClient.invalidateQueries({ queryKey: todoKeys.stats() });
