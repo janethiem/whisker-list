@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Icon from './Icon';
 
 // Mock the icon assets to avoid import errors in tests
@@ -93,7 +93,7 @@ describe('Icon', () => {
   it('renders null for non-existent icon', () => {
     const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
     
-    render(<Icon name="non-existent" as any />);
+    render(<Icon name={"non-existent" as any} />);
     
     expect(screen.queryByRole('img')).not.toBeInTheDocument();
     expect(consoleSpy).toHaveBeenCalledWith('Icon "non-existent" not found');

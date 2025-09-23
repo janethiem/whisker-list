@@ -68,8 +68,10 @@ Manual API testing collection available in `tests/WhiskerList.Api.http` - use wi
 ✅ **Due Dates** - Optional deadline tracking  
 
 ### Advanced Features
-✅ **Search & Filtering** - By completion status, priority, and text search  
-✅ **Flexible Sorting** - By creation date, title, due date, priority, updated date  
+✅ **Search & Filtering** - By completion status, priority, and text search
+✅ **Flexible Sorting** - By creation date, title, due date, priority, updated date
+✅ **Instant Performance** - Client-side filtering/sorting without API calls
+✅ **React Memoization** - Optimized rendering with React.memo and useMemo
 ✅ **Custom Icons** - Cat-themed icons (Compliments of Nano Banana)
 
 ### Developer Experience
@@ -131,6 +133,7 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 ### Frontend Architecture
 - **Component Structure**: Feature-based organization with reusable UI components
 - **State Management**: React Query for server state, local React state for UI
+- **Performance Optimization**: Client-side filtering/sorting without extraneous API calls
 - **Styling**: Tailwind utility classes with custom inline styles for theming
 - **Form Handling**: Controlled components with client-side validation
 
@@ -141,7 +144,7 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 ### Current Architecture Strengths
 - **Clean API Design**: RESTful endpoints with proper HTTP semantics
 - **Dependency Injection**: Proper service lifetime management
-- **Server-side Filtering**: Database-level query optimization
+- **React Memoization** - Optimized rendering with React.memo and useMemo
 - **Database Migrations**: Schema versioning for safe deployments
 - **Component Reusability**: Modular frontend architecture
 

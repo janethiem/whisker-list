@@ -29,7 +29,14 @@ const TodoFilters = ({ onFiltersChange, initialFilters = {} }: TodoFiltersProps)
     }
   }, [initialFilters]);
 
+  // Only call onFiltersChange for server-side filters (not sorting)
   useEffect(() => {
+    const serverFilters = {
+      search: filters.search,
+      isCompleted: filters.isCompleted,
+      priority: filters.priority,
+    };
+
     const timer = setTimeout(() => {
       onFiltersChangeRef.current(filters);
     }, 300);

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, memo } from 'react';
 import { CompletionCheckbox, TodoActions, TodoMeta } from './';
 import { useToggleTodoComplete, useDeleteTodo, useUpdateTodo } from '../../hooks/useTodos';
 import { UI_TEXT } from '../../constants/strings';
@@ -249,4 +249,4 @@ const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
   );
 };
 
-export default TodoItem;
+export default memo(TodoItem);

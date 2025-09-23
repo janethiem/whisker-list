@@ -15,7 +15,16 @@ import type { UpdateTodoRequest, TodoQueryParams } from '../types/todo';
 export const todoKeys = {
   all: ['todos'] as const,
   lists: () => [...todoKeys.all, 'list'] as const,
-  list: (params: TodoQueryParams) => [...todoKeys.lists(), params] as const,
+  // Create a stable query key by normalizing parameters
+  list: (params: TodoQueryParams) => {
+    // Only include server-side filtering parameters in the query key
+    const normalizedParams = {
+      search: params.search,
+      isCompleted: params.isCompleted,
+      priority: params.priority,
+    };
+    return [...todoKeys.lists(), normalizedParams] as const;
+  },
   details: () => [...todoKeys.all, 'detail'] as const,
   detail: (id: number) => [...todoKeys.details(), id] as const,
   stats: () => [...todoKeys.all, 'stats'] as const,
@@ -33,7 +42,11 @@ export const useTodos = (params: TodoQueryParams = {}) => {
     queryFn: () => fetchTodos(params),
     staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
     // Refetch when window refocuses (good UX for todo apps)
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false, // Disabled to prevent unnecessary refetches
+    // Don't refetch when mounting or remounting
+    refetchOnMount: false,
+    // Don't refetch when reconnecting
+    refetchOnReconnect: false,
   });
 };
 

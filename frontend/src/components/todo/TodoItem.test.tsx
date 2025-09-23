@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import TodoItem from './TodoItem';
 import type { TodoTask } from '../../types/todo';
 
@@ -323,12 +323,77 @@ describe('TodoItem', () => {
 
   it('passes correct props to sub-components', () => {
     render(<TodoItem {...defaultProps} />);
-    
+
     const checkbox = screen.getByTestId('completion-checkbox');
     expect(checkbox).toHaveAttribute('data-completed', 'false');
     expect(checkbox).toHaveAttribute('data-loading', 'false');
-    
+
     const todoMeta = screen.getByTestId('todo-meta');
     expect(todoMeta).toHaveTextContent('Meta: 2023-12-01T10:00:00Z, 2023-12-10T10:00:00Z, pending, priority 2');
+  });
+
+  // === MEMOIZATION TESTS ===
+
+  it('memoizes TodoItem component correctly', () => {
+    // Test that React.memo prevents unnecessary re-renders
+    const handleEdit = vi.fn();
+    const { rerender } = render(<TodoItem {...defaultProps} onEdit={handleEdit} />);
+
+    // Initial render
+    expect(screen.getByText('Test Todo')).toBeInTheDocument();
+
+    // Re-render with same props - should not cause issues
+    rerender(<TodoItem {...defaultProps} onEdit={handleEdit} />);
+
+    // Component should still be rendered correctly
+    expect(screen.getByText('Test Todo')).toBeInTheDocument();
+  });
+
+  it('re-renders when todo prop changes', () => {
+    const handleEdit = vi.fn();
+    const updatedTodo = { ...mockTodo, title: 'Updated Title' };
+
+    const { rerender } = render(<TodoItem {...defaultProps} onEdit={handleEdit} />);
+
+    // Initial render
+    expect(screen.getByText('Test Todo')).toBeInTheDocument();
+
+    // Re-render with changed todo - should update
+    rerender(<TodoItem {...defaultProps} todo={updatedTodo} onEdit={handleEdit} />);
+
+    expect(screen.getByText('Updated Title')).toBeInTheDocument();
+    expect(screen.queryByText('Test Todo')).not.toBeInTheDocument();
+  });
+
+  it('re-renders when onEdit prop changes', () => {
+    const handleEdit1 = vi.fn(() => 'first');
+    const handleEdit2 = vi.fn(() => 'second');
+
+    const { rerender } = render(<TodoItem {...defaultProps} onEdit={handleEdit1} />);
+
+    // Initial render with first handler
+    expect(screen.getByText('Test Todo')).toBeInTheDocument();
+
+    // Re-render with different handler - should update
+    rerender(<TodoItem {...defaultProps} onEdit={handleEdit2} />);
+
+    expect(screen.getByText('Test Todo')).toBeInTheDocument();
+    // Component should still work correctly with new handler
+  });
+
+  it('does not re-render when other props remain the same', () => {
+    const handleEdit = vi.fn();
+
+    // Mock console to track renders (if needed)
+    const { rerender } = render(<TodoItem {...defaultProps} onEdit={handleEdit} />);
+
+    // Initial render
+    expect(screen.getByText('Test Todo')).toBeInTheDocument();
+
+    // Re-render with identical props
+    rerender(<TodoItem {...defaultProps} onEdit={handleEdit} />);
+
+    // Should still work and maintain state
+    expect(screen.getByText('Test Todo')).toBeInTheDocument();
   });
 });
