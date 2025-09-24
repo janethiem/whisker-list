@@ -143,6 +143,7 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 - **React Memoization** - Optimized rendering with React.memo, useMemo, and useCallback
 - **Database Migrations**: Schema versioning for safe deployments
 - **Component Reusability**: Modular frontend architecture
+- **Server-Side Filtering and Sorting**: Database-level sorting and filtering already implemented for future improved performance with large datasets
 
 ### Known Limitations
 - **SQLite**: File-level locking limits high-concurrency scenarios

@@ -41,12 +41,6 @@ export const useTodos = (params: TodoQueryParams = {}) => {
     queryKey: todoKeys.list(params),
     queryFn: () => fetchTodos(params),
     staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
-    // Refetch when window refocuses (good UX for todo apps)
-    refetchOnWindowFocus: false, // Disabled to prevent unnecessary refetches
-    // Don't refetch when mounting or remounting
-    refetchOnMount: false,
-    // Don't refetch when reconnecting
-    refetchOnReconnect: false,
   });
 };
 
