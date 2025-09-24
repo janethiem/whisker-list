@@ -3,8 +3,7 @@ import type {
   TodoTask, 
   CreateTodoRequest, 
   UpdateTodoRequest, 
-  TodoQueryParams, 
-  TodoStats 
+  TodoQueryParams 
 } from '../types/todo';
 
 // ===== SERVICE FUNCTIONS =====
@@ -56,10 +55,3 @@ export const deleteTodo = async (id: number): Promise<void> => {
   await apiClient.delete(`/todo-tasks/${id}`);
 };
 
-/**
- * GET /todo-tasks/stats - Get todo statistics
- */
-export const fetchTodoStats = async (): Promise<TodoStats> => {
-  const response = await apiClient.get<TodoStats>('/todo-tasks/stats');
-  return response.data;
-};

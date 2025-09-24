@@ -206,38 +206,6 @@ namespace WhiskerList.Api.Controllers
             }
         }
 
-        /// <summary>
-        /// Get todo task statistics
-        /// </summary>
-        [HttpGet("stats")]
-        public async Task<ActionResult<object>> GetStats()
-        {
-            try
-            {
-                var total = await _context.TodoTasks.CountAsync();
-                var completed = await _context.TodoTasks.CountAsync(t => t.IsCompleted);
-                var pending = total - completed;
-                var overdue = await _context.TodoTasks.CountAsync(t => 
-                    !t.IsCompleted && t.DueDate.HasValue && t.DueDate < DateTime.UtcNow);
-
-                var stats = new
-                {
-                    Total = total,
-                    Completed = completed,
-                    Pending = pending,
-                    Overdue = overdue,
-                    CompletionRate = total > 0 ? Math.Round((double)completed / total * 100, 2) : 0
-                };
-
-                _logger.LogInformation("Retrieved todo task statistics");
-                return Ok(stats);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving todo task statistics");
-                return StatusCode(500, "An error occurred while retrieving statistics");
-            }
-        }
 
         private static TodoTaskResponse MapToResponse(TodoTask todoTask)
         {

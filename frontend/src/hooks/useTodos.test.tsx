@@ -5,14 +5,13 @@ import type { ReactNode } from 'react';
 import {
   useTodos,
   useTodo,
-  useTodoStats,
   useCreateTodo,
   useUpdateTodo,
   useToggleTodoComplete,
   useDeleteTodo,
 } from './useTodos';
 import * as todoService from '../services/todoService';
-import type { TodoTask, CreateTodoRequest, UpdateTodoRequest, TodoStats } from '../types/todo';
+import type { TodoTask, CreateTodoRequest, UpdateTodoRequest } from '../types/todo';
 
 // Mock the entire todoService module
 vi.mock('../services/todoService');
@@ -31,14 +30,6 @@ const mockTodo: TodoTask = {
 };
 
 const mockTodos: TodoTask[] = [mockTodo];
-
-const mockStats: TodoStats = {
-  total: 10,
-  completed: 6,
-  pending: 4,
-  overdue: 2,
-  completionRate: 0.6,
-};
 
 // Test wrapper component
 const createWrapper = () => {
@@ -133,23 +124,6 @@ describe('useTodos Hooks', () => {
       });
 
       expect(mockedTodoService.fetchTodo).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('useTodoStats', () => {
-    it('should fetch stats successfully', async () => {
-      mockedTodoService.fetchTodoStats.mockResolvedValueOnce(mockStats);
-
-      const { result } = renderHook(() => useTodoStats(), {
-        wrapper: createWrapper(),
-      });
-
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBe(true);
-      });
-
-      expect(result.current.data).toEqual(mockStats);
-      expect(mockedTodoService.fetchTodoStats).toHaveBeenCalled();
     });
   });
 

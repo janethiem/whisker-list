@@ -6,9 +6,8 @@ import {
   updateTodo,
   toggleTodoComplete,
   deleteTodo,
-  fetchTodoStats,
 } from './todoService';
-import type { TodoTask, CreateTodoRequest, UpdateTodoRequest, TodoStats } from '../types/todo';
+import type { TodoTask, CreateTodoRequest, UpdateTodoRequest } from '../types/todo';
 
 // Mock the api module
 vi.mock('./api', () => ({
@@ -44,14 +43,6 @@ const mockTodos: TodoTask[] = [
     isCompleted: true,
   },
 ];
-
-const mockStats: TodoStats = {
-  total: 10,
-  completed: 6,
-  pending: 4,
-  overdue: 2,
-  completionRate: 0.6,
-};
 
 describe('TodoService', () => {
   beforeEach(() => {
@@ -181,14 +172,4 @@ describe('TodoService', () => {
     });
   });
 
-  describe('fetchTodoStats', () => {
-    it('should fetch todo statistics', async () => {
-      mockApiClient.get.mockResolvedValueOnce({ data: mockStats });
-
-      const result = await fetchTodoStats();
-
-      expect(mockApiClient.get).toHaveBeenCalledWith('/todo-tasks/stats');
-      expect(result).toEqual(mockStats);
-    });
-  });
 });

@@ -6,7 +6,6 @@ import {
   updateTodo,
   toggleTodoComplete,
   deleteTodo,
-  fetchTodoStats,
 } from '../services/todoService';
 import type { UpdateTodoRequest, TodoQueryParams } from '../types/todo';
 
@@ -27,7 +26,6 @@ export const todoKeys = {
   },
   details: () => [...todoKeys.all, 'detail'] as const,
   detail: (id: number) => [...todoKeys.details(), id] as const,
-  stats: () => [...todoKeys.all, 'stats'] as const,
 } as const;
 
 // ===== QUERY HOOKS (for reading data) =====
@@ -57,18 +55,6 @@ export const useTodo = (id: number) => {
   });
 };
 
-/**
- * Hook to fetch todo statistics
- * 🔍 This is for GET /todo-tasks/stats
- */
-export const useTodoStats = () => {
-  return useQuery({
-    queryKey: todoKeys.stats(),
-    queryFn: fetchTodoStats,
-    staleTime: 2 * 60 * 1000, // Stats refresh more frequently
-  });
-};
-
 // ===== MUTATION HOOKS (for changing data) =====
 
 /**
@@ -83,7 +69,6 @@ export const useCreateTodo = () => {
     onSuccess: () => {
       // Invalidate and refetch todos list
       queryClient.invalidateQueries({ queryKey: todoKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: todoKeys.stats() });
     },
   });
 };
@@ -103,7 +88,6 @@ export const useUpdateTodo = () => {
       queryClient.setQueryData(todoKeys.detail(updatedTodo.id), updatedTodo);
       // Invalidate lists (in case sorting/filtering changed)
       queryClient.invalidateQueries({ queryKey: todoKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: todoKeys.stats() });
     },
   });
 };
@@ -122,7 +106,6 @@ export const useToggleTodoComplete = () => {
       // Update the specific todo in cache
       queryClient.setQueryData(todoKeys.detail(updatedTodo.id), updatedTodo);
       queryClient.invalidateQueries({ queryKey: todoKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: todoKeys.stats() });
     },
   });
 };
@@ -140,7 +123,6 @@ export const useDeleteTodo = () => {
       // Remove the todo from cache
       queryClient.removeQueries({ queryKey: todoKeys.detail(deletedId) });
       queryClient.invalidateQueries({ queryKey: todoKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: todoKeys.stats() });
     },
   });
 };

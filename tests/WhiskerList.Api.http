@@ -61,6 +61,3 @@ Content-Type: application/json
 
 ### Delete a todo task  
 DELETE {{baseUrl}}/2
-
-### Get todo task statistics
-GET {{baseUrl}}/stats

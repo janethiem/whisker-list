@@ -35,14 +35,6 @@ export interface TodoQueryParams {
   sortDescending?: boolean;
 }
 
-// Statistics response
-export interface TodoStats {
-  total: number;
-  completed: number;
-  pending: number;
-  overdue: number;
-  completionRate: number;
-}
 
 // Priority levels (you can adjust these based on your needs)
 export const PRIORITY_LEVELS = {

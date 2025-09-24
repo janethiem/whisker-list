@@ -161,7 +161,7 @@ All API endpoints are documented with Swagger/OpenAPI. Visit `http://localhost:5
 - **Database Optimization**: Indexing and query optimization
 
 ### User Experience
-- **Statistics Dashboard**: Utilize existing `/todo-tasks/stats` endpoint for productivity insights
+- **Statistics Dashboard**: Client-side calculated statistics for productivity insights
 - **Soft Delete System**: Allow users to undo task deletion with recovery period
 - **Bulk Operations**: Multi-select and batch actions for task management
 - **Drag & Drop**: Visual task reordering and priority management
