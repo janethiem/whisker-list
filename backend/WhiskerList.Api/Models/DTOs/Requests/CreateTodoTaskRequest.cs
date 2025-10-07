@@ -13,6 +13,7 @@ namespace WhiskerList.Api.Models.DTOs.Requests
 
         public DateTime? DueDate { get; set; }
 
+        [Range(1, 3, ErrorMessage = "Priority must be between 1 (Low) and 3 (High)")]
         public int Priority { get; set; } = 1;
     }
 }

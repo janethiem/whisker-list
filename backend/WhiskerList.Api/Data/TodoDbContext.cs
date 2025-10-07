@@ -34,13 +34,14 @@ namespace WhiskerList.Api.Data
                     .HasMaxLength(1000);
 
                 entity.Property(e => e.CreatedAt)
-                    .HasDefaultValueSql("datetime('now')");
+                    .IsRequired();
 
                 entity.Property(e => e.UpdatedAt)
-                    .HasDefaultValueSql("datetime('now')");
+                    .IsRequired();
 
-                // Create an index on IsCompleted for faster queries
-                entity.HasIndex(e => e.IsCompleted);
+                // No index on IsCompleted - boolean fields have low cardinality
+                // and typically don't benefit from indexing. At MVP scale with
+                // client-side filtering, table scans are sufficient.
             });
         }
     }

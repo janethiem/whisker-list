@@ -36,12 +36,10 @@ export interface TodoQueryParams {
 }
 
 
-// Priority levels (you can adjust these based on your needs)
 export const PRIORITY_LEVELS = {
   LOW: 1,
   MEDIUM: 2,
   HIGH: 3,
-  URGENT: 4,
 } as const;
 
 export type PriorityLevel = typeof PRIORITY_LEVELS[keyof typeof PRIORITY_LEVELS];

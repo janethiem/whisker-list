@@ -19,11 +19,11 @@ namespace WhiskerList.Api.Models
         // Task completion status
         public bool IsCompleted { get; set; } = false;
 
-        // When the task was created
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        // When the task was created (set by application)
+        public DateTime CreatedAt { get; set; }
 
-        // When the task was last updated
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        // When the task was last updated (set by application)
+        public DateTime UpdatedAt { get; set; }
 
         // Optional due date
         public DateTime? DueDate { get; set; }
