@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import EditModal from './features/EditModal';
 import TodoListHeader from './containers/TodoListHeader';
 import TodoFilters from './features/TodoFilters';
@@ -22,10 +22,10 @@ const TodoList = ({ queryParams = {}, onFiltersChange }: TodoListProps) => {
   // All filtering and sorting is handled client-side for instant results
   const { data: todos, isLoading, error, refetch } = useTodos({});
 
-  const handleEdit = (todo: TodoTask) => {
+  const handleEdit = useCallback((todo: TodoTask) => {
     setEditingTodo(todo);
     setShowForm(true);
-  };
+  }, []);
 
   const handleCloseForm = () => {
     setShowForm(false);

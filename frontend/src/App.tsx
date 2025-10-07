@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Icon } from './components'
 import { TodoList } from './components'
 import type { TodoQueryParams } from './types/todo'
@@ -6,9 +6,9 @@ import type { TodoQueryParams } from './types/todo'
 const App = () => {
   const [queryParams, setQueryParams] = useState<TodoQueryParams>({})
 
-  const handleFiltersChange = (newFilters: TodoQueryParams) => {
+  const handleFiltersChange = useCallback((newFilters: TodoQueryParams) => {
     setQueryParams(newFilters)
-  }
+  }, [])
 
   return (
     <div className="min-h-screen" style={{backgroundColor: '#f7f5f3'}}>
