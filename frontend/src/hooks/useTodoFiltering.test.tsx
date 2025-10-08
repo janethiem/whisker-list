@@ -52,7 +52,7 @@ describe('useTodoFiltering', () => {
     );
 
     expect(result.current).toHaveLength(4);
-    // Should maintain original order when no sorting is specified
+    // Should sort by createdAt (newest first) by default
     expect(result.current.map(todo => todo.id)).toEqual([1, 2, 3, 4]);
   });
 
@@ -63,7 +63,7 @@ describe('useTodoFiltering', () => {
 
     expect(result.current).toHaveLength(2);
     expect(result.current.every(todo => !todo.isCompleted)).toBe(true);
-    // Should maintain original order: Buy groceries (id: 1) comes before Finish report (id: 3)
+    // Should be sorted by createdAt (newest first): Buy groceries (id: 1) comes before Finish report (id: 3)
     expect(result.current.map(todo => todo.title)).toEqual(['Buy groceries', 'Finish report']);
   });
 
@@ -74,7 +74,7 @@ describe('useTodoFiltering', () => {
 
     expect(result.current).toHaveLength(2);
     expect(result.current.every(todo => todo.isCompleted)).toBe(true);
-    // Should maintain original order: Walk the dog (id: 2) comes before Call mom (id: 4)
+    // Should be sorted by createdAt (newest first): Walk the dog (id: 2) comes before Call mom (id: 4)
     expect(result.current.map(todo => todo.title)).toEqual(['Walk the dog', 'Call mom']);
   });
 
@@ -85,7 +85,7 @@ describe('useTodoFiltering', () => {
 
     expect(result.current).toHaveLength(2);
     expect(result.current.every(todo => todo.priority === 1)).toBe(true);
-    // Should maintain original order: Walk the dog (id: 2) comes before Call mom (id: 4)
+    // Should be sorted by createdAt (newest first): Walk the dog (id: 2) comes before Call mom (id: 4)
     expect(result.current.map(todo => todo.title)).toEqual(['Walk the dog', 'Call mom']);
   });
 

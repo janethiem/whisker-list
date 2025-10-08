@@ -28,39 +28,37 @@ export const useTodoFiltering = (todos: TodoTask[] | undefined, queryParams: Tod
       filtered = filtered.filter(todo => todo.priority === queryParams.priority);
     }
 
-    // Apply sorting client-side (only if sortBy is specified)
-    if (queryParams.sortBy) {
-      filtered.sort((a, b) => {
-        let comparison = 0;
+    // Apply sorting - default to createdAt (newest first) if not specified
+    const sortBy = queryParams.sortBy || 'createdAt';
+    
+    filtered.sort((a, b) => {
+      let comparison = 0;
 
-        switch (queryParams.sortBy) {
-          case 'title':
-            comparison = a.title.localeCompare(b.title);
-            break;
-          case 'dueDate':
-            // Items without due dates should come after items with due dates
-            const aDate = a.dueDate ? new Date(a.dueDate).getTime() : Number.MAX_SAFE_INTEGER;
-            const bDate = b.dueDate ? new Date(b.dueDate).getTime() : Number.MAX_SAFE_INTEGER;
-            comparison = aDate - bDate;
-            break;
-          case 'priority':
-            // Sort priority from high to low (3, 2, 1)
-            comparison = (b.priority || 0) - (a.priority || 0);
-            break;
-          case 'updatedAt':
-            comparison = new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
-            break;
-          case 'createdAt':
-            comparison = new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-            break;
-          default:
-            comparison = 0;
-        }
+      switch (sortBy) {
+        case 'title':
+          comparison = a.title.localeCompare(b.title);
+          break;
+        case 'dueDate':
+          // Items without due dates should come after items with due dates
+          const aDate = a.dueDate ? new Date(a.dueDate).getTime() : Number.MAX_SAFE_INTEGER;
+          const bDate = b.dueDate ? new Date(b.dueDate).getTime() : Number.MAX_SAFE_INTEGER;
+          comparison = aDate - bDate;
+          break;
+        case 'priority':
+          // Sort priority from high to low (3, 2, 1)
+          comparison = (b.priority || 0) - (a.priority || 0);
+          break;
+        case 'createdAt':
+          // Newest first
+          comparison = new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+          break;
+        default:
+          comparison = 0;
+      }
 
-        // Apply descending sort if specified
-        return queryParams.sortDescending ? -comparison : comparison;
-      });
-    }
+      // Apply descending sort if specified
+      return queryParams.sortDescending ? -comparison : comparison;
+    });
 
     return filtered;
   }, [todos, queryParams]);

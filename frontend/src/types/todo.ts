@@ -31,7 +31,7 @@ export interface TodoQueryParams {
   isCompleted?: boolean;
   priority?: number;
   search?: string;
-  sortBy?: 'createdAt' | 'title' | 'dueDate' | 'priority' | 'updatedAt';
+  sortBy?: 'createdAt' | 'title' | 'dueDate' | 'priority';
   sortDescending?: boolean;
 }
 
