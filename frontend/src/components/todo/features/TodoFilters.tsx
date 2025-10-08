@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Input, Select, Button } from '../../ui';
 import { UI_TEXT } from '../../../constants/strings';
 import type { TodoQueryParams } from '../../../types/todo';
@@ -11,21 +11,20 @@ interface TodoFiltersProps {
 const TodoFilters = ({ onFiltersChange, initialFilters = {} }: TodoFiltersProps) => {
   const [filters, setFilters] = useState<TodoQueryParams>(initialFilters);
 
-  // Apply filters immediately - no debounce needed for client-side filtering
-  useEffect(() => {
-    onFiltersChange(filters);
-  }, [filters, onFiltersChange]);
-
+  // Apply filters immediately by calling parent callback directly
   const updateFilter = useCallback((key: keyof TodoQueryParams, value: any) => {
-    setFilters(prev => ({
-      ...prev,
+    const newFilters = {
+      ...filters,
       [key]: value === '' ? undefined : value,
-    }));
-  }, []);
+    };
+    setFilters(newFilters);
+    onFiltersChange(newFilters);
+  }, [filters, onFiltersChange]);
 
   const clearFilters = useCallback(() => {
     setFilters({});
-  }, []);
+    onFiltersChange({});
+  }, [onFiltersChange]);
 
   const hasActiveFilters = Object.values(filters).some(value => 
     value !== undefined && value !== '' && value !== null
