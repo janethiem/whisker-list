@@ -18,9 +18,8 @@ const TodoList = ({ queryParams = {}, onFiltersChange }: TodoListProps) => {
   const [showForm, setShowForm] = useState(false);
   const [editingTodo, setEditingTodo] = useState<TodoTask | null>(null);
 
-  // Make a single API call to get all todos - no server-side filtering/sorting needed
-  // All filtering and sorting is handled client-side for instant results
-  const { data: todos, isLoading, error, refetch } = useTodos({});
+  // Fetch all todos for client-side filtering and sorting
+  const { data: todos, isLoading, error, refetch } = useTodos();
 
   const handleEdit = useCallback((todo: TodoTask) => {
     setEditingTodo(todo);

@@ -7,23 +7,13 @@ import {
   toggleTodoComplete,
   deleteTodo,
 } from '../services/todoService';
-import type { UpdateTodoRequest, TodoQueryParams } from '../types/todo';
+import type { UpdateTodoRequest } from '../types/todo';
 
 // ===== QUERY KEYS =====
-// Centralized query keys for consistent caching
+// Simplified query keys for client-side filtering approach
 export const todoKeys = {
   all: ['todos'] as const,
   lists: () => [...todoKeys.all, 'list'] as const,
-  // Create a stable query key by normalizing parameters
-  list: (params: TodoQueryParams) => {
-    // Only include server-side filtering parameters in the query key
-    const normalizedParams = {
-      search: params.search,
-      isCompleted: params.isCompleted,
-      priority: params.priority,
-    };
-    return [...todoKeys.lists(), normalizedParams] as const;
-  },
   details: () => [...todoKeys.all, 'detail'] as const,
   detail: (id: number) => [...todoKeys.details(), id] as const,
 } as const;
@@ -31,13 +21,13 @@ export const todoKeys = {
 // ===== QUERY HOOKS (for reading data) =====
 
 /**
- * Hook to fetch todos with optional filtering/sorting
- * 🔍 This is for GET /todo-tasks
+ * Hook to fetch all todos for client-side filtering
+ * 🔍 This is for GET /todo-tasks (fetches all todos)
  */
-export const useTodos = (params: TodoQueryParams = {}) => {
+export const useTodos = () => {
   return useQuery({
-    queryKey: todoKeys.list(params),
-    queryFn: () => fetchTodos(params),
+    queryKey: todoKeys.lists(),
+    queryFn: fetchTodos,
     staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
   });
 };

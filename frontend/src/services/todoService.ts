@@ -2,18 +2,17 @@ import { apiClient } from './api';
 import type { 
   TodoTask, 
   CreateTodoRequest, 
-  UpdateTodoRequest, 
-  TodoQueryParams 
+  UpdateTodoRequest
 } from '../types/todo';
 
 // ===== SERVICE FUNCTIONS =====
 // These are pure functions that make HTTP calls
 
 /**
- * GET /todo-tasks - Fetch all todos with optional filtering
+ * GET /todo-tasks - Fetch all todos (for client-side filtering)
  */
-export const fetchTodos = async (params: TodoQueryParams = {}): Promise<TodoTask[]> => {
-  const response = await apiClient.get<TodoTask[]>('/todo-tasks', { params });
+export const fetchTodos = async (): Promise<TodoTask[]> => {
+  const response = await apiClient.get<TodoTask[]>('/todo-tasks');
   return response.data;
 };
 

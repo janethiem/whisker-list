@@ -55,7 +55,7 @@ describe('useTodos Hooks', () => {
   });
 
   describe('useTodos', () => {
-    it('should fetch todos successfully', async () => {
+    it('should fetch all todos for client-side filtering', async () => {
       mockedTodoService.fetchTodos.mockResolvedValueOnce(mockTodos);
 
       const { result } = renderHook(() => useTodos(), {
@@ -67,22 +67,7 @@ describe('useTodos Hooks', () => {
       });
 
       expect(result.current.data).toEqual(mockTodos);
-      expect(mockedTodoService.fetchTodos).toHaveBeenCalledWith({});
-    });
-
-    it('should fetch todos with params', async () => {
-      const params = { isCompleted: false, priority: 2 };
-      mockedTodoService.fetchTodos.mockResolvedValueOnce([mockTodo]);
-
-      const { result } = renderHook(() => useTodos(params), {
-        wrapper: createWrapper(),
-      });
-
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBe(true);
-      });
-
-      expect(mockedTodoService.fetchTodos).toHaveBeenCalledWith(params);
+      expect(mockedTodoService.fetchTodos).toHaveBeenCalledWith(expect.anything());
     });
 
     it('should handle fetch errors', async () => {

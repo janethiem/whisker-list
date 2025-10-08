@@ -131,15 +131,10 @@ const mockUseTodos = {
   isLoading: false,
   error: null as Error | null,
   refetch: vi.fn(),
-  mockParams: {} as any, // To capture parameters passed to the hook
 };
 
 vi.mock('../../hooks/useTodos', () => ({
-  useTodos: (params: any) => {
-    // Capture the parameters passed to the hook
-    mockUseTodos.mockParams = params;
-    return mockUseTodos;
-  },
+  useTodos: () => mockUseTodos,
 }));
 
 // Mock UI_TEXT constants
@@ -190,7 +185,6 @@ describe('TodoList', () => {
     mockUseTodos.data = null;
     mockUseTodos.isLoading = false;
     mockUseTodos.error = null;
-    mockUseTodos.mockParams = {};
   });
 
   it('renders loading state correctly', () => {
@@ -388,52 +382,4 @@ describe('TodoList', () => {
   });
 
 
-  // === SERVER-SIDE PARAMETER TESTS ===
-
-  it('passes no parameters to server - all filtering is client-side', () => {
-    const queryParams: TodoQueryParams = {
-      search: 'test',
-      isCompleted: false,
-      priority: 2,
-      sortBy: 'title',
-      sortDescending: true
-    };
-
-    // Need to provide mock data to render content state instead of empty state
-    mockUseTodos.data = mockTodos;
-
-    render(<TodoList {...defaultProps} queryParams={queryParams} />);
-
-    // Verify that the server receives no parameters - all filtering is client-side
-    expect(mockUseTodos.mockParams).toEqual({});
-
-    // Verify that the component renders correctly with sorting parameters
-    expect(screen.getByTestId('todo-list-content')).toBeInTheDocument();
-
-    // Verify that the content component receives the full query params (including sorting)
-    const contentQueryParams = screen.getByTestId('content-query-params');
-    expect(contentQueryParams).toHaveTextContent(JSON.stringify(queryParams));
-  });
-
-  it('passes no parameters to server when no filtering is applied', () => {
-    const queryParams: TodoQueryParams = {
-      sortBy: 'title',
-      sortDescending: true
-    };
-
-    // Need to provide mock data to render content state instead of empty state
-    mockUseTodos.data = mockTodos;
-
-    render(<TodoList {...defaultProps} queryParams={queryParams} />);
-
-    // Verify that no parameters are passed to server when only sorting is used
-    expect(mockUseTodos.mockParams).toEqual({});
-
-    // Component should render correctly even with only sorting parameters
-    expect(screen.getByTestId('todo-list-content')).toBeInTheDocument();
-
-    // Content should receive the sorting parameters for client-side processing
-    const contentQueryParams = screen.getByTestId('content-query-params');
-    expect(contentQueryParams).toHaveTextContent(JSON.stringify(queryParams));
-  });
 });

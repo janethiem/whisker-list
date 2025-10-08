@@ -50,23 +50,13 @@ describe('TodoService', () => {
   });
 
   describe('fetchTodos', () => {
-    it('should fetch todos without params', async () => {
+    it('should fetch all todos for client-side filtering', async () => {
       mockApiClient.get.mockResolvedValueOnce({ data: mockTodos });
 
       const result = await fetchTodos();
 
-      expect(mockApiClient.get).toHaveBeenCalledWith('/todo-tasks', { params: {} });
+      expect(mockApiClient.get).toHaveBeenCalledWith('/todo-tasks');
       expect(result).toEqual(mockTodos);
-    });
-
-    it('should fetch todos with query params', async () => {
-      const params = { isCompleted: false, priority: 2, search: 'test' };
-      mockApiClient.get.mockResolvedValueOnce({ data: [mockTodo] });
-
-      const result = await fetchTodos(params);
-
-      expect(mockApiClient.get).toHaveBeenCalledWith('/todo-tasks', { params });
-      expect(result).toEqual([mockTodo]);
     });
 
     it('should handle network errors', async () => {
