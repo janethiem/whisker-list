@@ -92,7 +92,10 @@ const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
   };
 
   const handleBlur = () => {
-    setTimeout(saveEdit, 100);
+    // Only save if we're still in editing mode (not cancelled via Escape)
+    if (editingField) {
+      saveEdit();
+    }
   };
 
   const isOverdue = todo.dueDate && new Date(todo.dueDate) < new Date() && !todo.isCompleted;

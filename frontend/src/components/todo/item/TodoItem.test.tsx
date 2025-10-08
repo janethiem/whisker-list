@@ -258,6 +258,23 @@ describe('TodoItem', () => {
     expect(mockUpdateTodo.mutateAsync).not.toHaveBeenCalled();
   });
 
+  it('does not save on blur after Escape key', async () => {
+    render(<TodoItem {...defaultProps} />);
+    
+    const title = screen.getByText('Test Todo');
+    fireEvent.click(title);
+    
+    const titleInput = screen.getByDisplayValue('Test Todo');
+    fireEvent.change(titleInput, { target: { value: 'Updated Title' } });
+    fireEvent.keyDown(titleInput, { key: 'Escape' });
+    fireEvent.blur(titleInput);
+    
+    // Wait a bit to ensure no save happens
+    await new Promise(resolve => setTimeout(resolve, 50));
+    
+    expect(mockUpdateTodo.mutateAsync).not.toHaveBeenCalled();
+  });
+
   it('saves edit on blur', async () => {
     render(<TodoItem {...defaultProps} />);
     
@@ -268,10 +285,17 @@ describe('TodoItem', () => {
     fireEvent.change(titleInput, { target: { value: 'Updated Title' } });
     fireEvent.blur(titleInput);
     
-    // Wait for the setTimeout in handleBlur
     await waitFor(() => {
-      expect(mockUpdateTodo.mutateAsync).toHaveBeenCalled();
-    }, { timeout: 200 });
+      expect(mockUpdateTodo.mutateAsync).toHaveBeenCalledWith({
+        id: 1,
+        data: {
+          title: 'Updated Title',
+          description: 'Test description',
+          dueDate: '2023-12-10T10:00:00Z',
+          priority: 2,
+        }
+      });
+    });
   });
 
   it('does not allow editing when todo is completed', () => {
