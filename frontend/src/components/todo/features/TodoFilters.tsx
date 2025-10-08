@@ -1,32 +1,31 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Input, Select, Button } from '../../ui';
 import { UI_TEXT } from '../../../constants/strings';
 import type { TodoQueryParams } from '../../../types/todo';
 
 interface TodoFiltersProps {
+  filters: TodoQueryParams;
   onFiltersChange: (filters: TodoQueryParams) => void;
-  initialFilters?: TodoQueryParams;
 }
 
-const TodoFilters = ({ onFiltersChange, initialFilters = {} }: TodoFiltersProps) => {
-  const [filters, setFilters] = useState<TodoQueryParams>(initialFilters);
-
+const TodoFilters = ({ filters, onFiltersChange }: TodoFiltersProps) => {
   const updateFilter = useCallback((key: keyof TodoQueryParams, value: any) => {
     const newFilters = {
       ...filters,
       [key]: value === '' ? undefined : value,
     };
-    setFilters(newFilters);
     onFiltersChange(newFilters);
   }, [filters, onFiltersChange]);
 
   const clearFilters = useCallback(() => {
-    setFilters({});
     onFiltersChange({});
   }, [onFiltersChange]);
 
-  const hasActiveFilters = Object.values(filters).some(value => 
-    value !== undefined && value !== '' && value !== null
+  const hasActiveFilters = useMemo(() => 
+    Object.values(filters).some(value => 
+      value !== undefined && value !== '' && value !== null
+    ),
+    [filters]
   );
 
   return (

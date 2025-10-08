@@ -11,6 +11,7 @@ export const useTodoFiltering = (todos: TodoTask[] | undefined, queryParams: Tod
 
     let filtered = [...todos];
 
+    // Apply filters
     if (queryParams.search) {
       const searchTerm = queryParams.search.toLowerCase();
       filtered = filtered.filter(todo =>
@@ -27,7 +28,9 @@ export const useTodoFiltering = (todos: TodoTask[] | undefined, queryParams: Tod
       filtered = filtered.filter(todo => todo.priority === queryParams.priority);
     }
 
+    // Apply sorting
     const sortBy = queryParams.sortBy || 'createdAt';
+    const sortDescending = queryParams.sortDescending;
     
     filtered.sort((a, b) => {
       let comparison = 0;
@@ -36,22 +39,24 @@ export const useTodoFiltering = (todos: TodoTask[] | undefined, queryParams: Tod
         case 'title':
           comparison = a.title.localeCompare(b.title);
           break;
-        case 'dueDate':
+        case 'dueDate': {
           const aDate = a.dueDate ? new Date(a.dueDate).getTime() : Number.MAX_SAFE_INTEGER;
           const bDate = b.dueDate ? new Date(b.dueDate).getTime() : Number.MAX_SAFE_INTEGER;
           comparison = aDate - bDate;
           break;
+        }
         case 'priority':
           comparison = (b.priority || 0) - (a.priority || 0);
           break;
-        case 'createdAt':
+        case 'createdAt': {
           comparison = new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
           break;
+        }
         default:
           comparison = 0;
       }
 
-      return queryParams.sortDescending ? -comparison : comparison;
+      return sortDescending ? -comparison : comparison;
     });
 
     return filtered;

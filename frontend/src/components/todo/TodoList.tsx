@@ -34,7 +34,7 @@ const TodoList = ({ queryParams = {}, onFiltersChange }: TodoListProps) => {
     return (
       <div className="space-y-6">
         <TodoListHeader onAddClick={() => setShowForm(true)} />
-        <TodoFilters onFiltersChange={onFiltersChange} initialFilters={queryParams} />
+        <TodoFilters filters={queryParams} onFiltersChange={onFiltersChange} />
         <LoadingSkeleton />
       </div>
     );

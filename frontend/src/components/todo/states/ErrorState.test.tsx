@@ -5,12 +5,12 @@ import type { TodoQueryParams } from '../../types/todo';
 
 // Mock the sub-components at the top level
 vi.mock('../features/TodoFilters', () => ({
-  default: ({ initialFilters }: {
+  default: ({ filters }: {
     onFiltersChange: (filters: TodoQueryParams) => void;
-    initialFilters: TodoQueryParams
+    filters: TodoQueryParams
   }) => (
     <div data-testid="todo-filters">
-      <span>Filters: {JSON.stringify(initialFilters)}</span>
+      <span>Filters: {JSON.stringify(filters)}</span>
     </div>
   )
 }));

@@ -32,7 +32,7 @@ const TodoListContent = ({ todos, queryParams, onFiltersChange, onEdit, onAddCli
     <div className="space-y-6">
       <TodoListHeader todoCount={filteredTodos.length} onAddClick={onAddClick} />
 
-      <TodoFilters onFiltersChange={onFiltersChange} initialFilters={queryParams} />
+      <TodoFilters filters={queryParams} onFiltersChange={onFiltersChange} />
 
       {memoizedTodoItems}
     </div>

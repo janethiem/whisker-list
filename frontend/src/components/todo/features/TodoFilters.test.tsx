@@ -47,6 +47,7 @@ vi.mock('../../../constants/strings', () => ({
 
 describe('TodoFilters', () => {
   const defaultProps = {
+    filters: {},
     onFiltersChange: vi.fn(),
   };
 
@@ -79,14 +80,14 @@ describe('TodoFilters', () => {
   });
 
   it('populates form with initial filters', () => {
-    const initialFilters: TodoQueryParams = {
+    const filters: TodoQueryParams = {
       search: 'initial search',
       isCompleted: false,
       priority: 3,
       sortBy: 'dueDate',
     };
     
-    render(<TodoFilters {...defaultProps} initialFilters={initialFilters} />);
+    render(<TodoFilters {...defaultProps} filters={filters} />);
     
     const searchInput = screen.getByPlaceholderText('Search tasks...');
     expect(searchInput).toHaveValue('initial search');
@@ -142,43 +143,51 @@ describe('TodoFilters', () => {
   });
 
   it('clears all active filters', () => {
-    const initialFilters: TodoQueryParams = {
+    const filters: TodoQueryParams = {
       search: 'test',
       isCompleted: true,
       priority: 2,
     };
     
-    render(<TodoFilters {...defaultProps} initialFilters={initialFilters} />);
+    render(<TodoFilters {...defaultProps} filters={filters} />);
     
     expect(screen.getByText('Clear')).toBeInTheDocument();
     
     fireEvent.click(screen.getByText('Clear'));
     
     expect(defaultProps.onFiltersChange).toHaveBeenCalledWith({});
-    expect(screen.queryByText('Clear')).not.toBeInTheDocument();
   });
 
   it('shows clear button only when filters are active', () => {
     // Render without filters - no clear button
-    const { unmount } = render(<TodoFilters {...defaultProps} />);
+    const { unmount } = render(<TodoFilters {...defaultProps} filters={{}} />);
     expect(screen.queryByText('Clear')).not.toBeInTheDocument();
     unmount();
     
-    // Render with initial filters - clear button appears
-    const initialFilters: TodoQueryParams = {
+    // Render with filters - clear button appears
+    const filters: TodoQueryParams = {
       search: 'test',
       isCompleted: true,
     };
-    render(<TodoFilters {...defaultProps} initialFilters={initialFilters} />);
+    render(<TodoFilters {...defaultProps} filters={filters} />);
     expect(screen.getByText('Clear')).toBeInTheDocument();
   });
 
   it('converts empty strings to undefined in filter values', () => {
-    render(<TodoFilters {...defaultProps} />);
+    const { rerender } = render(<TodoFilters {...defaultProps} filters={{}} />);
     
     const searchInput = screen.getByPlaceholderText('Search tasks...');
     
+    // First add a search value
     fireEvent.change(searchInput, { target: { value: 'test' } });
+    expect(defaultProps.onFiltersChange).toHaveBeenLastCalledWith({
+      search: 'test'
+    });
+    
+    // Update component with new filters
+    rerender(<TodoFilters {...defaultProps} filters={{ search: 'test' }} />);
+    
+    // Then clear it
     fireEvent.change(searchInput, { target: { value: '' } });
     
     expect(defaultProps.onFiltersChange).toHaveBeenLastCalledWith({

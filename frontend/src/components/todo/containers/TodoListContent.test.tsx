@@ -16,12 +16,12 @@ vi.mock('../item/TodoItem', () => ({
 }));
 
 vi.mock('../features/TodoFilters', () => ({
-  default: ({ onFiltersChange, initialFilters }: {
+  default: ({ onFiltersChange, filters }: {
     onFiltersChange: (filters: TodoQueryParams) => void;
-    initialFilters: TodoQueryParams
+    filters: TodoQueryParams
   }) => (
     <div data-testid="todo-filters">
-      <span>Filters: {JSON.stringify(initialFilters)}</span>
+      <span>Filters: {JSON.stringify(filters)}</span>
       <button onClick={() => onFiltersChange({ search: 'test' })} data-testid="filter-btn">
         Change Filter
       </button>

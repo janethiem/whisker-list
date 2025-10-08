@@ -20,7 +20,7 @@ const EmptyState = ({ queryParams, onFiltersChange, onAddClick }: EmptyStateProp
     <div className="space-y-6">
       <TodoListHeader onAddClick={onAddClick} />
 
-      <TodoFilters onFiltersChange={onFiltersChange} initialFilters={queryParams} />
+      <TodoFilters filters={queryParams} onFiltersChange={onFiltersChange} />
 
       <div className="text-center py-12 border rounded" style={{backgroundColor: '#ffffff', borderColor: '#d4b8a3', boxShadow: '0 1px 3px rgba(212, 184, 163, 0.1)'}}>
         <Icon name={hasFilters ? "cat-magnifying-glass" : "sleeping-cat"} size={64} className="mx-auto mb-4 opacity-50" />
