@@ -11,7 +11,6 @@ interface TodoFiltersProps {
 const TodoFilters = ({ onFiltersChange, initialFilters = {} }: TodoFiltersProps) => {
   const [filters, setFilters] = useState<TodoQueryParams>(initialFilters);
 
-  // Apply filters immediately by calling parent callback directly
   const updateFilter = useCallback((key: keyof TodoQueryParams, value: any) => {
     const newFilters = {
       ...filters,
@@ -32,7 +31,6 @@ const TodoFilters = ({ onFiltersChange, initialFilters = {} }: TodoFiltersProps)
 
   return (
     <div className="flex flex-wrap items-center gap-3 p-4 border rounded mb-6" style={{backgroundColor: '#ffffff', borderColor: '#d4b8a3', boxShadow: '0 1px 3px rgba(212, 184, 163, 0.1)'}}>
-      {/* Search */}
       <div className="flex-1 min-w-64">
         <Input
           type="text"
@@ -42,7 +40,6 @@ const TodoFilters = ({ onFiltersChange, initialFilters = {} }: TodoFiltersProps)
         />
       </div>
 
-      {/* Status Filter */}
       <Select
         value={filters.isCompleted === undefined ? '' : filters.isCompleted.toString()}
         onChange={(e) => updateFilter('isCompleted', e.target.value === '' ? undefined : e.target.value === 'true')}
@@ -52,7 +49,6 @@ const TodoFilters = ({ onFiltersChange, initialFilters = {} }: TodoFiltersProps)
         <option value="true">{UI_TEXT.COMPLETED}</option>
       </Select>
 
-      {/* Priority Filter */}
       <Select
         value={filters.priority || ''}
         onChange={(e) => updateFilter('priority', e.target.value ? parseInt(e.target.value) : undefined)}
@@ -63,7 +59,6 @@ const TodoFilters = ({ onFiltersChange, initialFilters = {} }: TodoFiltersProps)
         <option value="3">{UI_TEXT.HIGH_PRIORITY}</option>
       </Select>
 
-      {/* Sort */}
       <Select
         value={filters.sortBy || 'createdAt'}
         onChange={(e) => updateFilter('sortBy', e.target.value)}

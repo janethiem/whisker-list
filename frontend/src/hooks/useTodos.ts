@@ -9,8 +9,6 @@ import {
 } from '../services/todoService';
 import type { UpdateTodoRequest } from '../types/todo';
 
-// ===== QUERY KEYS =====
-// Simplified query keys for client-side filtering approach
 export const todoKeys = {
   all: ['todos'] as const,
   lists: () => [...todoKeys.all, 'list'] as const,
@@ -18,38 +16,31 @@ export const todoKeys = {
   detail: (id: number) => [...todoKeys.details(), id] as const,
 } as const;
 
-// ===== QUERY HOOKS (for reading data) =====
-
 /**
  * Hook to fetch all todos for client-side filtering
- * 🔍 This is for GET /todo-tasks (fetches all todos)
  */
 export const useTodos = () => {
   return useQuery({
     queryKey: todoKeys.lists(),
     queryFn: fetchTodos,
-    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+    staleTime: 5 * 60 * 1000,
   });
 };
 
 /**
  * Hook to fetch a single todo by ID
- * 🔍 This is for GET /todo-tasks/{id}
  */
 export const useTodo = (id: number) => {
   return useQuery({
     queryKey: todoKeys.detail(id),
     queryFn: () => fetchTodo(id),
-    enabled: !!id, // Only run query if ID exists
-    staleTime: 10 * 60 * 1000, // Individual todos stay fresh longer
+    enabled: !!id,
+    staleTime: 10 * 60 * 1000,
   });
 };
 
-// ===== MUTATION HOOKS (for changing data) =====
-
 /**
  * Hook to create a new todo
- * ✏️ This is for POST /todo-tasks
  */
 export const useCreateTodo = () => {
   const queryClient = useQueryClient();
@@ -57,7 +48,6 @@ export const useCreateTodo = () => {
   return useMutation({
     mutationFn: createTodo,
     onSuccess: () => {
-      // Invalidate and refetch todos list
       queryClient.invalidateQueries({ queryKey: todoKeys.lists() });
     },
   });
@@ -65,7 +55,6 @@ export const useCreateTodo = () => {
 
 /**
  * Hook to update a todo
- * ✏️ This is for PATCH /todo-tasks/{id}
  */
 export const useUpdateTodo = () => {
   const queryClient = useQueryClient();
@@ -74,9 +63,7 @@ export const useUpdateTodo = () => {
     mutationFn: ({ id, data }: { id: number; data: UpdateTodoRequest }) => 
       updateTodo(id, data),
     onSuccess: (updatedTodo) => {
-      // Update the specific todo in cache
       queryClient.setQueryData(todoKeys.detail(updatedTodo.id), updatedTodo);
-      // Invalidate lists (in case sorting/filtering changed)
       queryClient.invalidateQueries({ queryKey: todoKeys.lists() });
     },
   });
@@ -84,7 +71,6 @@ export const useUpdateTodo = () => {
 
 /**
  * Hook to toggle todo completion
- * ✏️ This uses the main PATCH /todo-tasks/{id} endpoint
  */
 export const useToggleTodoComplete = () => {
   const queryClient = useQueryClient();
@@ -93,7 +79,6 @@ export const useToggleTodoComplete = () => {
     mutationFn: ({ id, currentIsCompleted }: { id: number; currentIsCompleted: boolean }) => 
       toggleTodoComplete(id, currentIsCompleted),
     onSuccess: (updatedTodo) => {
-      // Update the specific todo in cache
       queryClient.setQueryData(todoKeys.detail(updatedTodo.id), updatedTodo);
       queryClient.invalidateQueries({ queryKey: todoKeys.lists() });
     },
@@ -102,7 +87,6 @@ export const useToggleTodoComplete = () => {
 
 /**
  * Hook to delete a todo
- * ✏️ This is for DELETE /todo-tasks/{id}
  */
 export const useDeleteTodo = () => {
   const queryClient = useQueryClient();
@@ -110,7 +94,6 @@ export const useDeleteTodo = () => {
   return useMutation({
     mutationFn: deleteTodo,
     onSuccess: (_, deletedId) => {
-      // Remove the todo from cache
       queryClient.removeQueries({ queryKey: todoKeys.detail(deletedId) });
       queryClient.invalidateQueries({ queryKey: todoKeys.lists() });
     },

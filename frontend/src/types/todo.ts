@@ -1,20 +1,18 @@
-// Core Todo Task type (matches your API response)
 export interface TodoTask {
   id: number;
   title: string;
   description?: string;
   isCompleted: boolean;
-  createdAt: string; // ISO date string from API
-  updatedAt: string; // ISO date string from API
-  dueDate?: string; // ISO date string from API
+  createdAt: string;
+  updatedAt: string;
+  dueDate?: string;
   priority: number;
 }
 
-// Request types for API calls
 export interface CreateTodoRequest {
   title: string;
   description?: string;
-  dueDate?: string; // ISO date string
+  dueDate?: string;
   priority: number;
 }
 
@@ -22,11 +20,10 @@ export interface UpdateTodoRequest {
   title?: string;
   description?: string;
   isCompleted?: boolean;
-  dueDate?: string; // ISO date string
+  dueDate?: string;
   priority?: number;
 }
 
-// Query parameters for filtering/sorting
 export interface TodoQueryParams {
   isCompleted?: boolean;
   priority?: number;

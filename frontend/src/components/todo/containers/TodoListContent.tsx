@@ -14,10 +14,8 @@ interface TodoListContentProps {
 }
 
 const TodoListContent = ({ todos, queryParams, onFiltersChange, onEdit, onAddClick }: TodoListContentProps) => {
-  // Use client-side filtering for instant results without API calls
   const filteredTodos = useTodoFiltering(todos, queryParams);
 
-  // Memoize the todo items rendering to prevent unnecessary re-renders
   const memoizedTodoItems = useMemo(() => (
     <div className="space-y-2">
       {filteredTodos.map((todo) => (
@@ -36,7 +34,6 @@ const TodoListContent = ({ todos, queryParams, onFiltersChange, onEdit, onAddCli
 
       <TodoFilters onFiltersChange={onFiltersChange} initialFilters={queryParams} />
 
-      {/* Todo Items - Memoized for performance */}
       {memoizedTodoItems}
     </div>
   );

@@ -26,7 +26,6 @@ const EditModal = ({ todo, onClose, onSuccess }: EditModalProps) => {
   const isEditing = !!todo;
   const isLoading = createTodo.isPending || updateTodo.isPending;
 
-  // Populate form when editing
   useEffect(() => {
     if (todo) {
       setFormData({
@@ -77,13 +76,11 @@ const EditModal = ({ todo, onClose, onSuccess }: EditModalProps) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center p-6 z-50">
-      {/* Blurred backdrop - no overlay, just blur */}
       <div 
         className="fixed inset-0 backdrop-blur-sm"
         onClick={onClose}
       />
       
-      {/* Modal content */}
       <div className="border rounded-lg shadow-xl w-full max-w-md mx-4 relative z-10" style={{backgroundColor: '#ffffff', borderColor: '#d4b8a3'}}>
         <div className="p-6 border-b" style={{borderColor: '#e8e3df'}}>
           <h2 className="text-lg font-medium flex items-center gap-2" style={{color: '#3a3a3a'}}>

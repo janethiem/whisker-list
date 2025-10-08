@@ -18,7 +18,6 @@ const TodoList = ({ queryParams = {}, onFiltersChange }: TodoListProps) => {
   const [showForm, setShowForm] = useState(false);
   const [editingTodo, setEditingTodo] = useState<TodoTask | null>(null);
 
-  // Fetch all todos for client-side filtering and sorting
   const { data: todos, isLoading, error, refetch } = useTodos();
 
   const handleEdit = useCallback((todo: TodoTask) => {
@@ -31,7 +30,6 @@ const TodoList = ({ queryParams = {}, onFiltersChange }: TodoListProps) => {
     setEditingTodo(null);
   };
 
-  // Loading State
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -42,7 +40,6 @@ const TodoList = ({ queryParams = {}, onFiltersChange }: TodoListProps) => {
     );
   }
 
-  // Error State
   if (error) {
     return (
       <>
@@ -63,7 +60,6 @@ const TodoList = ({ queryParams = {}, onFiltersChange }: TodoListProps) => {
     );
   }
 
-  // Empty State (no todos or filtered results)
   if (!todos || todos.length === 0) {
     return (
       <>
@@ -82,7 +78,6 @@ const TodoList = ({ queryParams = {}, onFiltersChange }: TodoListProps) => {
     );
   }
 
-  // Success State with Todos
   return (
     <>
       <TodoListContent

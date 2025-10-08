@@ -1,6 +1,5 @@
 import type { ImgHTMLAttributes } from 'react';
 
-// Import icons directly
 import pawPrintIcon from '../../assets/icons/paw-print.png';
 import yarnBallIcon from '../../assets/icons/yarn-ball.png';
 import catClipboardIcon from '../../assets/icons/cat-clipboard.png';
@@ -71,7 +70,6 @@ const Icon = ({ name, size = 24, className = '', tooltip, ...props }: IconProps)
     return null;
   }
 
-  // Auto-generate tooltip from semantic name if not provided
   const autoTooltip = tooltipMap[name as SemanticIconName];
   const finalTooltip = tooltip || autoTooltip;
 

@@ -12,7 +12,6 @@ const App = () => {
 
   return (
     <div className="min-h-screen" style={{backgroundColor: '#f7f5f3'}}>
-      {/* Header */}
       <div className="border-b" style={{backgroundColor: '#ffffff', borderColor: '#d4b8a3'}}>
         <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-6xl" style={{paddingLeft: '16px', paddingRight: '16px'}}>
           <div className="flex items-center justify-center">
@@ -27,7 +26,6 @@ const App = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="mx-auto px-4 sm:px-6 lg:px-8 py-10 max-w-6xl" style={{paddingLeft: '16px', paddingRight: '16px'}}>
         <TodoList 
           queryParams={queryParams} 

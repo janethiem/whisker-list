@@ -5,11 +5,8 @@ import type {
   UpdateTodoRequest
 } from '../types/todo';
 
-// ===== SERVICE FUNCTIONS =====
-// These are pure functions that make HTTP calls
-
 /**
- * GET /todo-tasks - Fetch all todos (for client-side filtering)
+ * GET /todo-tasks - Fetch all todos
  */
 export const fetchTodos = async (): Promise<TodoTask[]> => {
   const response = await apiClient.get<TodoTask[]>('/todo-tasks');

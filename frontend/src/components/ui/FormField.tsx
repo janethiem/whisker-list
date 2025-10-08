@@ -1,6 +1,5 @@
 import type { InputHTMLAttributes, TextareaHTMLAttributes, SelectHTMLAttributes, ReactNode } from 'react';
 
-// Base theme colors matching your app's design
 const THEME = {
   colors: {
     border: '#d4b8a3',
@@ -11,7 +10,6 @@ const THEME = {
   }
 };
 
-// Common input props
 interface BaseFieldProps {
   label?: string;
   error?: string;
@@ -19,7 +17,6 @@ interface BaseFieldProps {
   className?: string;
 }
 
-// Input component
 interface InputProps extends BaseFieldProps, Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> {}
 
 export const Input = ({ 
@@ -74,7 +71,6 @@ export const Input = ({
   );
 };
 
-// Textarea component
 interface TextareaProps extends BaseFieldProps, Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'className'> {}
 
 export const Textarea = ({ 
@@ -129,7 +125,6 @@ export const Textarea = ({
   );
 };
 
-// Select component
 interface SelectProps extends BaseFieldProps, Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className'> {
   children: ReactNode;
 }
@@ -189,7 +184,6 @@ export const Select = ({
   );
 };
 
-// Compound FormField component
 interface FormFieldProps extends BaseFieldProps {
   type?: 'input' | 'textarea' | 'select';
   children?: ReactNode;

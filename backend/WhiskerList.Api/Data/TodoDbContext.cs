@@ -9,23 +9,18 @@ namespace WhiskerList.Api.Data
         {
         }
 
-        // This represents the TodoTasks table in the database
         public DbSet<TodoTask> TodoTasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure the TodoTask entity
             modelBuilder.Entity<TodoTask>(entity =>
             {
-                // Set table name
                 entity.ToTable("TodoTasks");
 
-                // Configure primary key
                 entity.HasKey(e => e.Id);
 
-                // Configure properties
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasMaxLength(200);

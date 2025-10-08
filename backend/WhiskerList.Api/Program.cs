@@ -3,14 +3,11 @@ using WhiskerList.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add Entity Framework and SQLite
 builder.Services.AddDbContext<TodoDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add controllers
 builder.Services.AddControllers();
 
-// Add CORS for frontend
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
@@ -21,7 +18,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Add Swagger UI
 builder.Services.AddEndpointsApiExplorer(); 
 builder.Services.AddSwaggerGen(o => 
 {
@@ -30,16 +26,14 @@ builder.Services.AddSwaggerGen(o =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();                        // 3. serve JSON spec at /swagger/v1/swagger.json
-    app.UseSwaggerUI();                      // 4. serve UI at /swagger
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 
-// Map controllers
 app.UseCors("AllowFrontend");
 app.MapControllers();
 

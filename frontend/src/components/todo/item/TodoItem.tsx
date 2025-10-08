@@ -21,7 +21,6 @@ const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
   const deleteTodoMutation = useDeleteTodo();
   const updateTodoMutation = useUpdateTodo();
 
-  // Focus input when editing starts
   useEffect(() => {
     if (editingField === 'title' && titleInputRef.current) {
       titleInputRef.current.focus();
@@ -50,7 +49,7 @@ const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
   };
 
   const startEditing = (field: 'title' | 'description') => {
-    if (todo.isCompleted) return; // Don't allow editing completed tasks
+    if (todo.isCompleted) return;
     
     setEditingField(field);
     setEditValue(field === 'title' ? todo.title : (todo.description || ''));
@@ -80,7 +79,6 @@ const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
       setEditValue('');
     } catch (error) {
       console.error('Failed to update todo:', error);
-      // Don't exit edit mode on error, let user try again
     }
   };
 
@@ -94,7 +92,6 @@ const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
   };
 
   const handleBlur = () => {
-    // Small delay to allow clicking on other UI elements
     setTimeout(saveEdit, 100);
   };
 
@@ -110,7 +107,6 @@ const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
     }}>
       
       <div className="flex items-center gap-3">
-        {/* Completion Checkbox */}
         <div className="flex-shrink-0">
           <CompletionCheckbox 
             isCompleted={todo.isCompleted}
@@ -119,9 +115,7 @@ const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
           />
         </div>
 
-        {/* Content */}
         <div className="flex-1 min-w-0">
-          {/* Title - Inline Editable */}
           {editingField === 'title' ? (
             <input
               ref={titleInputRef}
@@ -165,7 +159,6 @@ const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
             </h3>
           )}
 
-          {/* Description - Inline Editable */}
           {editingField === 'description' ? (
             <textarea
               ref={descriptionTextareaRef}
@@ -238,7 +231,6 @@ const TodoItem = ({ todo, onEdit }: TodoItemProps) => {
           />
         </div>
 
-        {/* Action Buttons */}
         <TodoActions 
           onEdit={() => onEdit?.(todo)}
           onDelete={handleDelete}

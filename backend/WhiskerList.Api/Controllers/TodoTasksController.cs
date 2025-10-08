@@ -8,7 +8,7 @@ using WhiskerList.Api.Models.DTOs.Responses;
 namespace WhiskerList.Api.Controllers
 {
     [ApiController]
-    [Route("todo-tasks")]  // ← Clean kebab-case URL: /todo-tasks
+    [Route("todo-tasks")]
     public class TodoTasksController : ControllerBase
     {
         private readonly TodoDbContext _context;
@@ -35,7 +35,6 @@ namespace WhiskerList.Api.Controllers
             {
                 var query = _context.TodoTasks.AsQueryable();
 
-                // Apply filters
                 if (isCompleted.HasValue)
                     query = query.Where(t => t.IsCompleted == isCompleted.Value);
 
@@ -46,7 +45,6 @@ namespace WhiskerList.Api.Controllers
                     query = query.Where(t => t.Title.Contains(search) || 
                                            (t.Description != null && t.Description.Contains(search)));
 
-                // Apply sorting
                 query = sortBy.ToLower() switch
                 {
                     "title" => sortDescending ? query.OrderByDescending(t => t.Title) : query.OrderBy(t => t.Title),
@@ -144,7 +142,6 @@ namespace WhiskerList.Api.Controllers
                     return NotFound($"Todo task with ID {id} not found");
                 }
 
-                // Update only provided fields
                 if (request.Title != null)
                     todoTask.Title = request.Title;
 
